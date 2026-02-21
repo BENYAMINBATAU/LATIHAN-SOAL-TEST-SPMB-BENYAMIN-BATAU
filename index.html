@@ -215,6 +215,133 @@ const bankSoal = [
     jawaban: "B",
     penjelasan: "Defisiensi G6PD → jalur pentosa fosfat terganggu → ↓ NADPH → ↓ reduced glutathione → kerusakan oksidatif → hemolisis."
   }
+  // Tambahkan ini ke const bankSoal = [ ... ] di kode HTML-mu
+{
+  soal: "Sebuah rumah sakit menggunakan pompa infus untuk memberikan cairan saline 0,9% kepada pasien. Laju aliran cairan adalah 125 mL/jam. Jika volume total cairan yang dibutuhkan adalah 1 liter, berapa lama waktu yang diperlukan (dalam menit) untuk menyelesaikan infus tersebut? (Asumsikan aliran konstan tanpa kehilangan)",
+  pilihan: [
+    "A. 400 menit",
+    "B. 480 menit",
+    "C. 500 menit",
+    "D. 520 menit",
+    "E. 600 menit"
+  ],
+  jawaban: "B",
+  penjelasan: "Waktu = volume / laju = 1000 mL / 125 mL/jam = 8 jam = 8 × 60 = 480 menit. HOTS: aplikasi konversi satuan dan perhitungan waktu medis."
+},
+{
+  soal: "Dalam sebuah penelitian, distribusi berat badan pasien diabetes menunjukkan rata-rata 75 kg dengan simpangan baku 12 kg. Jika distribusi normal, berapa persen pasien yang memiliki berat badan di atas 99 kg? (Gunakan aturan empiris 68-95-99.7, nilai z ≈ 2 untuk 95%)",
+  pilihan: [
+    "A. Sekitar 2,5%",
+    "B. Sekitar 5%",
+    "C. Sekitar 16%",
+    "D. Sekitar 32%",
+    "E. Kurang dari 1%"
+  ],
+  jawaban: "A",
+  penjelasan: "99 kg = rata-rata + 2 simpangan baku (75 + 24 = 99). Di atas +2σ ≈ 2,5% (satu sisi distribusi normal). HOTS: interpretasi data statistik klinis."
+},
+{
+  soal: "Seorang pasien mengalami fibrilasi atrium dengan denyut jantung tidak teratur. Jika volume sekuncup (stroke volume) rata-rata 70 mL dan frekuensi jantung 120 bpm, hitung cardiac output (L/menit) pasien tersebut.",
+  pilihan: [
+    "A. 5,6 L/menit",
+    "B. 6,8 L/menit",
+    "C. 8,4 L/menit",
+    "D. 9,0 L/menit",
+    "E. 10,5 L/menit"
+  ],
+  jawaban: "C",
+  penjelasan: "Cardiac output = stroke volume × heart rate = 70 mL × 120 = 8400 mL/menit = 8,4 L/menit. HOTS: aplikasi fisika aliran darah (hemodinamika)."
+},
+{
+  soal: "Pada kasus keracunan CO, hemoglobin membentuk karboksihemoglobin (COHb) yang mengikat CO 200 kali lebih kuat daripada O₂. Jika saturasi COHb mencapai 40%, berapa persen kapasitas pengangkutan oksigen darah yang hilang? (Asumsikan kurva disosiasi normal)",
+  pilihan: [
+    "A. 20%",
+    "B. 40%",
+    "C. 60%",
+    "D. 80%",
+    "E. Hampir 100%"
+  ],
+  jawaban: "B",
+  penjelasan: "Kapasitas O₂ hilang sebanding dengan % COHb (40% terikat CO → 40% hilang). HOTS: kimia ikatan ligan dan fisiologi respirasi."
+},
+{
+  soal: "Dalam kultur sel kanker, laju pembelahan sel mengikuti model eksponensial: N(t) = N₀ × 2^(t/T), dengan T = waktu penggandaan 24 jam. Jika awal ada 10^5 sel, berapa sel setelah 72 jam?",
+  pilihan: [
+    "A. 4 × 10^5",
+    "B. 8 × 10^5",
+    "C. 1,6 × 10^6",
+    "D. 3,2 × 10^6",
+    "E. 6,4 × 10^6"
+  ],
+  jawaban: "B",
+  penjelasan: "72 jam / 24 jam = 3 penggandaan → 10^5 × 2^3 = 10^5 × 8 = 8 × 10^5. HOTS: biologi sel + matematika eksponensial."
+},
+// Fisika Medis HOTS
+{
+  soal: "Pada pemeriksaan X-ray dada, foton energi 50 keV digunakan. Jika intensitas awal I₀, setelah menembus jaringan paru (μ = 0,2 cm⁻¹, tebal 10 cm), berapa persen intensitas yang tersisa? (Gunakan hukum eksponensial I = I₀ e^(-μx))",
+  pilihan: [
+    "A. ≈ 13,5%",
+    "B. ≈ 18,3%",
+    "C. ≈ 27,1%",
+    "D. ≈ 36,8%",
+    "E. ≈ 45,0%"
+  ],
+  jawaban: "A",
+  penjelasan: "I/I₀ = e^(-0,2 × 10) = e^(-2) ≈ 0,135 = 13,5%. HOTS: fisika radiasi medis & atenuasi."
+},
+// Kimia Organik Klinis
+{
+  soal: "Aspirin (asam asetilsalisilat) dihidrolisis di usus menjadi asam salisilat dan asam asetat. Jika pKa aspirin 3,5 dan pKa asam salisilat 3,0, bentuk dominan asam salisilat di lumen usus (pH ≈ 6) adalah...",
+  pilihan: [
+    "A. Bentuk protonasi (HA)",
+    "B. Bentuk deprotonasi (A⁻)",
+    "C. Campuran 50:50",
+    "D. Tidak terionisasi sama sekali",
+    "E. Terikat protein"
+  ],
+  jawaban: "B",
+  penjelasan: "pH 6 >> pKa 3,0 → hampir seluruhnya terionisasi (A⁻). HOTS: kimia asam-basa obat & farmakokinetik."
+},
+// Biologi Genetika
+{
+  soal: "Pada penyakit sickle cell anemia (mutasi HbS), substitusi asam amino valin menggantikan glutamat pada posisi ke-6 rantai β-globin. Konsekuensi molekuler utama adalah...",
+  pilihan: [
+    "A. Penurunan afinitas oksigen hemoglobin",
+    "B. Pembentukan polimer HbS saat deoksigenasi → distorsi eritrosit",
+    "C. Peningkatan laju glikolisis eritrosit",
+    "D. Gangguan sintesis heme",
+    "E. Defisiensi enzim G6PD"
+  ],
+  jawaban: "B",
+  penjelasan: "HbS polymerisasi pada kondisi hipoksia → sel sabit → hemolisis & oklusi vaskular. HOTS: genetika molekuler & patofisiologi."
+},
+// Matematika Penalaran Lanjutan
+{
+  soal: "Dalam uji klinis obat baru, efektivitas diukur dengan odds ratio (OR) = 2,5 (95% CI: 1,8–3,4). Interpretasi yang paling tepat adalah...",
+  pilihan: [
+    "A. Kemungkinan sukses pengobatan 2,5 kali lebih besar pada kelompok obat",
+    "B. Risiko relatif 2,5 kali lebih tinggi",
+    "C. Tidak signifikan karena CI melewati 1",
+    "D. Signifikan secara statistik (CI tidak melewati 1)",
+    "E. Efek samping meningkat 2,5 kali"
+  ],
+  jawaban: "D",
+  penjelasan: "CI tidak mengandung 1 → OR signifikan. OR >1 berarti efek positif. HOTS: statistik inferensial medis."
+},
+// Fisika Medis Lanjutan
+{
+  soal: "Pada MRI, medan magnet statis 1,5 T digunakan. Frekuensi resonansi proton hidrogen (γ/2π ≈ 42,58 MHz/T) adalah...",
+  pilihan: [
+    "A. 21,29 MHz",
+    "B. 42,58 MHz",
+    "C. 63,87 MHz",
+    "D. 85,16 MHz",
+    "E. 127,74 MHz"
+  ],
+  jawaban: "C",
+  penjelasan: "f = γ B / 2π = 42,58 × 1,5 ≈ 63,87 MHz. HOTS: fisika NMR & imaging medis."
+},
+// ... Tambahkan sendiri pola serupa untuk mencapai 50–100 soal
   // ... tambah puluhan soal lagi sesuai kebutuhan (biologi klinis, metabolisme, imunologi, fisika medis, dll)
 ];
 
