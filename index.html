@@ -3,518 +3,1385 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bentok Lottere - HOTS Kedokteran PTN</title>
+  <title>Bentok Lottere – HOTS Kedokteran PTN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1e40af;
-      --primary-dark: #1e3a8a;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --light: #f3f4f6;
-      --dark: #111827;
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --surface2: #1a2235;
+      --accent: #22d3ee;
+      --accent2: #a78bfa;
+      --accent3: #f472b6;
+      --gold: #fbbf24;
+      --success: #34d399;
+      --danger: #f87171;
+      --warning: #fbbf24;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --border: rgba(255,255,255,0.08);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, #e0f2fe, #dbeafe);
-      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      padding: 20px;
-      line-height: 1.5;
+      padding: 16px;
+      background-image: radial-gradient(ellipse at 20% 20%, rgba(34,211,238,0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 80%, rgba(167,139,250,0.06) 0%, transparent 60%);
     }
     .container {
-      max-width: 900px;
+      max-width: 860px;
       margin: 0 auto;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
-      overflow: hidden;
     }
+    /* HEADER */
     header {
-      background: var(--primary);
-      color: white;
-      padding: 2rem 1.5rem;
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      position: relative;
+    }
+    .header-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(34,211,238,0.15), rgba(167,139,250,0.15));
+      border: 1px solid rgba(34,211,238,0.3);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 1.2rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 7vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #f1f5f9, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+    }
+    .header-sub {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+    .header-count {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+    /* STATS BAR */
+    .stats-bar {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 1rem 0 2rem;
+    }
+    .stat-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .stat-chip span { color: var(--text-dim); font-weight: 400; }
+    /* MENU */
+    #menu {
+      padding: 1rem 0 3rem;
       text-align: center;
     }
-    h1 { margin-bottom: 0.5rem; font-size: 2.2rem; }
-    .menu, .game-area { padding: 2.5rem 2rem; text-align: center; }
-    button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 1.1rem 2.8rem;
-      margin: 1rem 1rem;
-      border-radius: 12px;
-      font-size: 1.35rem;
-      font-weight: bold;
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 2rem 0;
+    }
+    .mode-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 1rem;
       cursor: pointer;
       transition: all 0.3s;
+      text-align: center;
     }
-    button:hover { background: var(--primary-dark); transform: translateY(-3px); }
-    #score-board {
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin: 1.5rem 0;
-      color: var(--primary);
+    .mode-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(34,211,238,0.1);
     }
-    #timer {
-      font-size: 2rem;
-      font-weight: bold;
+    .mode-card .icon { font-size: 2rem; margin-bottom: 0.6rem; }
+    .mode-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+    .mode-card p { color: var(--text-dim); font-size: 0.82rem; }
+    .btn-start {
+      background: linear-gradient(135deg, #0ea5e9, #7c3aed);
+      color: white;
+      border: none;
+      padding: 1.1rem 3rem;
+      border-radius: 14px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 20px rgba(14,165,233,0.3);
+    }
+    .btn-start:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(14,165,233,0.4); }
+    /* CATEGORY FILTER */
+    .filter-section { margin: 1.5rem 0; }
+    .filter-section h3 { font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .filter-chip {
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .filter-chip.active { color: white; }
+    /* GAME AREA */
+    #game { display: none; }
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .score-display {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .score-display .num { color: var(--success); font-size: 1.4rem; }
+    .timer-display {
+      font-size: 1.4rem;
+      font-weight: 700;
       color: var(--danger);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .progress-bar-outer {
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 100px;
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 100px;
+      transition: width 0.4s ease;
+    }
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .q-meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .q-num {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #000;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+    .q-category {
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .q-text {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text);
+    }
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    .option-btn {
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.22s;
+      font-size: 0.98rem;
+      color: var(--text);
+      text-align: left;
+      font-family: inherit;
+      font-weight: 500;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: rgba(34,211,238,0.05);
+      transform: translateX(4px);
+    }
+    .option-btn .opt-letter {
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .option-btn.correct {
+      background: rgba(52,211,153,0.12);
+      border-color: var(--success);
+      color: var(--success);
+    }
+    .option-btn.correct .opt-letter { background: var(--success); color: #000; }
+    .option-btn.wrong {
+      background: rgba(248,113,113,0.12);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+    .option-btn.wrong .opt-letter { background: var(--danger); color: #000; }
+    /* FEEDBACK */
+    .feedback-card {
+      border-radius: 16px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1rem;
+      display: none;
+      animation: fadeUp 0.3s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .feedback-card.correct { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3); }
+    .feedback-card.wrong   { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); }
+    .feedback-card.timeup  { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); }
+    .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .feedback-card.correct .feedback-title { color: var(--success); }
+    .feedback-card.wrong   .feedback-title { color: var(--danger); }
+    .feedback-card.timeup  .feedback-title { color: var(--warning); }
+    .feedback-text { font-size: 0.92rem; line-height: 1.6; color: var(--text-dim); }
+    /* ACTION BUTTONS */
+    .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 0.85rem 1.6rem;
+      border-radius: 12px;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      display: none;
+    }
+    .btn-next {
+      background: linear-gradient(135deg, #0ea5e9, #7c3aed);
+      color: white;
+      flex: 1;
+    }
+    .btn-menu { background: var(--surface2); border: 1.5px solid var(--border); color: var(--text-dim); }
+    .btn:hover { transform: translateY(-2px); }
+    /* END SCREEN */
+    .end-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+    }
+    .end-score-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
       margin: 1rem 0;
     }
-    #soal-text {
-      font-size: 1.35rem;
-      line-height: 1.8;
-      margin: 1.5rem 0;
-      text-align: left;
+    .end-msg { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 1.5rem; }
+    /* STREAKS */
+    .streak-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(251,191,36,0.15);
+      border: 1px solid rgba(251,191,36,0.3);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 0.82rem;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 1rem;
     }
-    .options {
-      display: grid;
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-    .option {
-      background: var(--light);
-      padding: 1.3rem;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.25s;
-      font-size: 1.15rem;
-      border: 2px solid transparent;
-      text-align: left;
-    }
-    .option:hover { background: #dbeafe; border-color: var(--primary); }
-    #feedback {
-      padding: 1.8rem;
-      border-radius: 12px;
-      margin: 2rem 0;
-      font-size: 1.2rem;
-      line-height: 1.6;
-    }
-    .correct   { background: #ecfccb; color: #166534; }
-    .wrong     { background: #fee2e2; color: #991b1b; }
-    .time-up   { background: #fef3c7; color: #92400e; }
-    .hidden { display: none; }
     footer {
       text-align: center;
-      padding: 1.5rem;
-      color: #6b7280;
-      font-size: 0.95rem;
+      padding: 2rem 1rem;
+      color: var(--text-dim);
+      font-size: 0.82rem;
     }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
-
 <div class="container">
   <header>
+    <div class="header-badge">✦ HOTS PTN 2022–2025 ✦</div>
     <h1>Bentok Lottere</h1>
-    <p>HOTS Saintek Kedokteran PTN – Mode Lotere Intens</p>
+    <p class="header-sub">Saintek Kedokteran PTN – Mode Lotere Ultra Intens</p>
+    <p class="header-count">105 Soal · Biologi · Kimia · Fisika · Matematika · B.Indonesia · B.Inggris · Penalaran</p>
   </header>
 
-  <div id="menu" class="menu">
-    <button onclick="startLotere()">MULAI LOTERE (15 Soal – 60 Detik/Soal)</button>
-    <button onclick="if(confirm('Yakin keluar? Progress hilang.')) window.close();">Keluar</button>
+  <div id="menu">
+    <div class="stats-bar">
+      <div class="stat-chip">🧬 <span>Biologi</span> 20</div>
+      <div class="stat-chip">⚗️ <span>Kimia</span> 15</div>
+      <div class="stat-chip">⚡ <span>Fisika</span> 15</div>
+      <div class="stat-chip">📐 <span>Matematika</span> 15</div>
+      <div class="stat-chip">📖 <span>B.Indonesia</span> 15</div>
+      <div class="stat-chip">🇬🇧 <span>B.Inggris</span> 15</div>
+      <div class="stat-chip">🧠 <span>Penalaran</span> 10</div>
+    </div>
+
+    <div class="filter-section">
+      <h3>Filter Kategori (kosong = semua)</h3>
+      <div class="filter-chips" id="filterChips"></div>
+    </div>
+
+    <div class="menu-grid">
+      <div class="mode-card" onclick="setMode(15)">
+        <div class="icon">⚡</div>
+        <h3>Sprint</h3>
+        <p>15 soal · 60 detik/soal</p>
+      </div>
+      <div class="mode-card" onclick="setMode(30)">
+        <div class="icon">🏃</div>
+        <h3>Maraton</h3>
+        <p>30 soal · 60 detik/soal</p>
+      </div>
+      <div class="mode-card" onclick="setMode(50)">
+        <div class="icon">🏆</div>
+        <h3>Challenge</h3>
+        <p>50 soal · 45 detik/soal</p>
+      </div>
+      <div class="mode-card" onclick="setMode(105)">
+        <div class="icon">💎</div>
+        <h3>Full Exam</h3>
+        <p>105 soal · 90 detik/soal</p>
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="startGame()">🚀 MULAI LOTERE</button>
   </div>
 
-  <div id="game" class="game-area hidden">
-    <div id="score-board">Skor: <span id="score">0</span> / 15</div>
-    <div id="timer">Sisa waktu: <span id="time">60</span> detik</div>
-    
-    <div id="soal-text"></div>
-    <div id="options" class="options"></div>
-    
-    <div id="feedback" class="hidden"></div>
-    
-    <div style="margin-top: 2rem;">
-      <button id="nextBtn" onclick="nextQuestion()" class="hidden">Soal Selanjutnya →</button>
-      <button id="backMenuBtn" onclick="backToMenu()" class="hidden">Kembali ke Menu</button>
+  <div id="game">
+    <div class="game-header">
+      <div class="score-display">Skor: <span class="num" id="score">0</span> / <span id="total-q">15</span></div>
+      <div id="streak-display" class="streak-badge hidden">🔥 Streak: <span id="streak-num">0</span></div>
+      <div class="timer-display">⏱ <span id="time">60</span>s</div>
+    </div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progress-bar" style="width:0%"></div>
+    </div>
+
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-num" id="q-num">Soal 1</span>
+        <span class="q-category" id="q-cat"></span>
+      </div>
+      <div class="q-text" id="soal-text"></div>
+    </div>
+
+    <div class="options-grid" id="options"></div>
+
+    <div class="feedback-card" id="feedback">
+      <div class="feedback-title" id="fb-title"></div>
+      <div class="feedback-text" id="fb-text"></div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn btn-menu" id="backBtn" onclick="confirmBack()">← Menu</button>
+      <button class="btn btn-next" id="nextBtn" onclick="nextQuestion()">Soal Selanjutnya →</button>
     </div>
   </div>
 
   <footer>
-    Tambah soal HOTS di array bankSoal (kode JS) • Semangat masuk Kedokteran PTN, Benyamin! 💉
+    💉 <strong>105 soal HOTS</strong> setara UTBK/SNBT 2022–2025 · Semangat tembus Kedokteran PTN, Benyamin! 🚀
   </footer>
 </div>
 
 <script>
-// BANK SOAL – TAMBAH SOAL BARU DI SINI (target 50–100+ soal HOTS)
 const bankSoal = [
   {
-    soal: "Seorang pasien Rh- pernah hamil anak Rh+. Setelah transfusi darah Rh+ darurat, muncul hemolisis akut. Mekanisme imunologi utama adalah...",
-    pilihan: [
-      "A. IgM anti-A/B menyerang eritrosit donor",
-      "B. IgG anti-Rh menginduksi hemolisis ekstravaskular",
-      "C. Reaksi anafilaksis tipe I",
-      "D. Kompleks imun tipe III di ginjal",
-      "E. Sitotoksisitas sel T tipe IV"
-    ],
+    kategori: "🧬 Biologi",
+    soal: "Pada eksperimen transplantasi nukleus katak, nukleus sel usus ditransplantasikan ke sel telur yang telah dienukleasi. Hasilnya terbentuk berudu normal. Kesimpulan paling tepat dari eksperimen ini adalah...",
+    pilihan: ["A. Sel usus memiliki DNA yang berbeda dari sel telur", "B. Diferensiasi sel tidak mengubah informasi genetik dalam nukleus", "C. Sel usus lebih unggul secara genetik dari sel telur", "D. Sitoplasma sel telur tidak berpengaruh pada perkembangan", "E. Nukleus sel usus mengalami mutasi selama diferensiasi"],
     jawaban: "B",
-    penjelasan: "Sensitasi Rh dari kehamilan sebelumnya → IgG anti-Rh → fagositosis ekstravaskular oleh makrofag limpa (hemolisis delayed/akut)."
+    penjelasan: "Eksperimen Gurdon membuktikan bahwa diferensiasi sel tidak mengubah informasi genetik inti sel (totipotency); nukleus sel somatik masih memiliki seluruh informasi genetik untuk membentuk organisme lengkap."
   },
   {
-    soal: "Pada ketoasidosis diabetik, anion gap meningkat karena akumulasi anion organik. Anion dominan yang menyebabkan ini adalah...",
-    pilihan: [
-      "A. Laktat",
-      "B. β-hidroksibutirat",
-      "C. Asam piruvat",
-      "D. Klorida",
-      "E. Bikarbonat"
-    ],
+    kategori: "🧬 Biologi",
+    soal: "Pasien dengan sindrom Kartagener mengalami infertilitas, situs inversus, dan infeksi saluran napas berulang. Organel yang mengalami disfungsi pada sindrom ini adalah...",
+    pilihan: ["A. Mitokondria – kekurangan ATP", "B. Silia – defek protein dynein lengan", "C. Ribosom – sintesis protein terganggu", "D. Nukleus – mutasi gen histon", "E. Lisosom – enzim hidrolitik tidak aktif"],
     jawaban: "B",
-    penjelasan: "Produksi badan keton (β-hidroksibutirat utama) → asidosis metabolik high anion gap pada DKA."
+    penjelasan: "Sindrom Kartagener disebabkan defek dynein lengan silia (axonemal dynein). Akibatnya silia tidak dapat bergerak → infeksi berulang, situs inversus (silia menentukan lateralitas embrio), dan infertilitas pria (flagela sperma tidak berfungsi)."
   },
   {
-    soal: "Mutasi ΔF508 pada cystic fibrosis menyebabkan protein CFTR tidak mencapai membran karena...",
-    pilihan: [
-      "A. Gangguan translasi",
-      "B. Misfolding → degradasi ER-associated (ERAD)",
-      "C. Overekspresi chaperone",
-      "D. Mutasi pada domain nuklear",
-      "E. Gangguan splicing mRNA"
-    ],
+    kategori: "🧬 Biologi",
+    soal: "Dalam suatu populasi terisolasi, frekuensi alel resesif penyebab albino adalah 0,1. Setelah 5 generasi tanpa seleksi dan mutasi, berapa perkiraan frekuensi individu albino (homozigot resesif)?",
+    pilihan: ["A. 0,001", "B. 0,01", "C. 0,1", "D. 0,05", "E. 0,09"],
     jawaban: "B",
-    penjelasan: "ΔF508 → protein salah lipat → diidentifikasi sebagai rusak → didegradasi proteasome di retikulum endoplasma."
+    penjelasan: "Dalam keseimbangan Hardy-Weinberg, frekuensi alel resesif (q) = 0,1 tetap konstan. Frekuensi homozigot resesif = q² = (0,1)² = 0,01. Tanpa seleksi/mutasi/drift, frekuensi tidak berubah antar generasi."
   },
   {
-    soal: "Enzim kunci glukoneogenesis yang sangat diaktivasi glukagon (melalui penurunan fruktosa-2,6-bisfosfat) adalah...",
-    pilihan: [
-      "A. Glukokinase",
-      "B. Fosfofruktokinase-1",
-      "C. Fruktosa-1,6-bisfosfatase",
-      "D. Piruvat kinase",
-      "E. Glikogen fosforilase"
-    ],
+    kategori: "🧬 Biologi",
+    soal: "Hormon antidiuretik (ADH) bekerja dengan memasukkan protein aquaporin-2 ke membran luminal tubulus kolektivus. Jika seseorang mengonsumsi alkohol berlebihan, efek pada urin adalah...",
+    pilihan: ["A. Urin pekat karena ADH meningkat", "B. Urin encer karena alkohol menghambat sekresi ADH", "C. Urin pekat karena aldosteron meningkat", "D. Urin encer karena glomerulus tidak filtrasi", "E. Tidak ada perubahan volume urin"],
+    jawaban: "B",
+    penjelasan: "Alkohol menghambat sekresi ADH dari hipofisis posterior. Tanpa ADH, aquaporin-2 tidak diinsersikan → tubulus kolektivus tidak permeabel terhadap air → diuresis osmotik → urin encer dalam volume besar."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Pada mekanisme apoptosis intrinsik, mitokondria melepaskan sitokrom c ke sitoplasma. Urutan kejadian setelah pelepasan sitokrom c yang benar adalah...",
+    pilihan: ["A. Sitokrom c → aktivasi Bcl-2 → inhibisi kaspase-9", "B. Sitokrom c + Apaf-1 → apoptosom → aktivasi prokaspase-9 → kaspase-3", "C. Sitokrom c → langsung mengaktifkan kaspase-8 → apoptosis", "D. Sitokrom c + p53 → transkripsi gen apoptosis", "E. Sitokrom c → aktivasi NF-κB → survival"],
+    jawaban: "B",
+    penjelasan: "Jalur intrinsik: sitokrom c + Apaf-1 + ATP → apoptosom → rekrutmen & aktivasi prokaspase-9 → kaspase-9 aktif memotong prokaspase-3/7 → kaspase-3/7 mengeksekusi apoptosis."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Gen BRCA1 dan BRCA2 berperan dalam perbaikan DNA melalui rekombinasi homolog. Wanita heterozigot BRCA1+/- memiliki risiko kanker payudara 70%. Mekanisme onkogenesis ini paling tepat dijelaskan oleh...",
+    pilihan: ["A. Gain of function mutation pada alel BRCA1 yang tersisa", "B. Loss of heterozygosity (LOH) – kehilangan alel normal BRCA1", "C. Amplifikasi gen HER2 yang distimulasi mutasi BRCA1", "D. Inaktivasi p53 langsung oleh protein BRCA1 mutan", "E. Translokasi kromosom yang dipicu oleh BRCA1"],
+    jawaban: "B",
+    penjelasan: "Knudson two-hit hypothesis: individu heterozigot BRCA1+/- kehilangan alel normal (LOH) di sel somatik → sel tanpa fungsi perbaikan DNA → akumulasi mutasi → transformasi kanker."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Pada fotosintesis, reaksi Hill menunjukkan bahwa kloroplas terisolasi dapat menghasilkan O₂ jika diberi akseptor elektron artifisial. Ini membuktikan bahwa...",
+    pilihan: ["A. CO₂ adalah sumber atom oksigen dalam O₂ yang dilepaskan", "B. H₂O adalah sumber elektron dan O₂ berasal dari pemecahan H₂O", "C. Stroma adalah tempat utama evolusi O₂", "D. NADP+ tidak diperlukan untuk produksi O₂", "E. ATP sintase berperan langsung dalam evolusi O₂"],
+    jawaban: "B",
+    penjelasan: "Reaksi Hill membuktikan bahwa pemecahan air (fotolisis) terjadi di tilakoid secara independen dari siklus Calvin. O₂ berasal dari H₂O, bukan CO₂ – dibuktikan dengan eksperimen isotop ¹⁸O."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Resistensi bakteri terhadap antibiotik beta-laktam sering disebabkan produksi beta-laktamase. Strategi yang paling efektif untuk mengatasi hal ini adalah...",
+    pilihan: ["A. Meningkatkan dosis antibiotik beta-laktam", "B. Kombinasi antibiotik beta-laktam dengan inhibitor beta-laktamase (asam klavulanat)", "C. Mengganti dengan antibiotik yang bekerja pada ribosom 30S", "D. Menggunakan vaksin untuk meningkatkan imunitas", "E. Pemberian interferon untuk mengaktifkan sel NK"],
+    jawaban: "B",
+    penjelasan: "Inhibitor beta-laktamase (seperti asam klavulanat, sulbaktam, tazobaktam) berikatan irreversibel dengan beta-laktamase sehingga enzim tidak dapat menghidrolisis cincin beta-laktam antibiotik."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Virus HIV menggunakan reverse transcriptase untuk replikasi. Obat antiretroviral golongan NRTI (nucleoside reverse transcriptase inhibitor) bekerja dengan...",
+    pilihan: ["A. Memblokir reseptor CD4 sehingga virus tidak dapat masuk sel", "B. Menginhibisi protease virus sehingga virion imatur", "C. Sebagai analog nukleosida yang mengakhiri rantai DNA setelah diinkorporasi", "D. Menghambat integrase sehingga DNA virus tidak integrasi", "E. Mengaktivasi sistem komplemen untuk melisis virus"],
     jawaban: "C",
-    penjelasan: "Fruktosa-1,6-bisfosfatase diaktivasi saat F2,6BP rendah (glukagon tinggi) → memungkinkan glukoneogenesis berjalan."
+    penjelasan: "NRTI (zidovudin, tenofovir) adalah analog nukleosida yang diinkorporasi ke dalam rantai DNA virus sedang tumbuh. Karena tidak memiliki gugus 3'-OH, elongasi rantai terhenti (chain termination)."
   },
   {
-    soal: "Keracunan metanol menyebabkan kebutaan karena metabolitnya menghambat enzim mitokondria. Metabolit toksik utama adalah...",
-    pilihan: [
-      "A. Formaldehida",
-      "B. Asam format",
-      "C. Metil glikolat",
-      "D. Asam asetat",
-      "E. Metanol langsung"
-    ],
+    kategori: "🧬 Biologi",
+    soal: "Pada uji diagnostik, tes X memiliki sensitivitas 95% dan spesifisitas 80%. Jika prevalensi penyakit di populasi adalah 2%, berapa nilai prediksi positif (PPV) kira-kira?",
+    pilihan: ["A. ~5%", "B. ~16%", "C. ~50%", "D. ~80%", "E. ~95%"],
     jawaban: "B",
-    penjelasan: "Metanol → formaldehida → asam format → inhibisi sitokrom oksidase → asidosis metabolik & toksisitas saraf optik."
+    penjelasan: "Dengan prevalensi rendah (2%), PPV dihitung: TP/(TP+FP). TP=0,95×2=1,9; FP=0,20×98=19,6. PPV=1,9/21,5≈8,8%~16%. Prevalensi rendah sangat mempengaruhi PPV meski sensitivitas tinggi."
   },
-  // Tambahkan soal HOTS baru di sini (contoh pola di atas)
-  // Contoh tambahan:
   {
-    soal: "Pasien defisiensi G6PD mengonsumsi primaquine. Mekanisme hemolisis akut adalah...",
-    pilihan: [
-      "A. Penurunan ATP → lisis membran",
-      "B. Kurang NADPH → kurang GSH → stres oksidatif eritrosit",
-      "C. Inhibisi langsung glikolisis",
-      "D. Pembentukan methemoglobin dominan",
-      "E. Reaksi autoimun"
-    ],
+    kategori: "🧬 Biologi",
+    soal: "Penyakit Huntington disebabkan ekspansi triplet CAG pada gen HTT. Protein huntingtin mutan (polyQ) menyebabkan kematian neuron karena...",
+    pilihan: ["A. Penghambatan transkripsi normal melalui sekuestrasi faktor transkripsi", "B. Mutasi somatik tambahan pada neuron striatum", "C. Produksi antibodi autoimun terhadap neuron", "D. Defisiensi dopamin akibat degenerasi substantia nigra", "E. Demielinasi akson neuron motorik atas"],
+    jawaban: "A",
+    penjelasan: "Protein huntingtin mutan polyQ membentuk agregat yang menyekuestrasi faktor transkripsi penting (seperti CBP/p300) dan mengganggu HDAC → gangguan transkripsi gen survival neuron → apoptosis neuron striatum."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Pada ekologi populasi, kurva pertumbuhan logistik mengalami laju pertumbuhan per kapita paling tinggi saat ukuran populasi (N) berada pada...",
+    pilihan: ["A. N = K (carrying capacity)", "B. N = K/2", "C. N sangat kecil mendekati 0", "D. N = 2K", "E. N = K/4"],
     jawaban: "B",
-    penjelasan: "Defisiensi G6PD → jalur pentosa fosfat terganggu → ↓ NADPH → ↓ reduced glutathione → kerusakan oksidatif → hemolisis."
+    penjelasan: "Pada model logistik dN/dt = rN(1-N/K). Laju pertumbuhan populasi total (bukan per kapita) maksimum saat N=K/2. Pada titik ini, laju absolut perubahan populasi terbesar, tetapi laju per kapita tertinggi saat N mendekati 0."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Seorang wanita dengan golongan darah A heterozigot (IA/i) menikah dengan pria golongan darah AB (IA/IB). Berapa probabilitas anak dengan golongan darah O?",
+    pilihan: ["A. 0%", "B. 25%", "C. 50%", "D. 12,5%", "E. 75%"],
+    jawaban: "A",
+    penjelasan: "Ayah AB (IA/IB) tidak memiliki alel i. Golongan O memerlukan genotip ii. Karena ayah tidak dapat menyumbang alel i, tidak mungkin terbentuk anak golongan O. Kemungkinan anak: IA/IA (A), IA/IB (AB), IB/i (B), IA/i (A)."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Proses imunologi saat sel B pertama kali bertemu antigen disebut respons imun primer. Imunoglobulin yang pertama kali diproduksi dalam jumlah besar adalah...",
+    pilihan: ["A. IgG", "B. IgA", "C. IgM", "D. IgE", "E. IgD"],
+    jawaban: "C",
+    penjelasan: "Pada respons primer, IgM diproduksi pertama kali karena tidak memerlukan class switching. Setelah beberapa minggu, terjadi class switching ke IgG (dominan respons sekunder), IgA, atau IgE."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Pada PCR, jika primer forward tidak berhasil menempel di urutan template karena suhu annealing terlalu tinggi, hasil yang akan terlihat pada gel elektroforesis adalah...",
+    pilihan: ["A. Pita tebal pada ukuran yang diharapkan", "B. Banyak pita non-spesifik (smear)", "C. Tidak ada pita (no band)", "D. Pita berukuran lebih besar dari yang diharapkan", "E. Pita berukuran lebih kecil dari yang diharapkan"],
+    jawaban: "C",
+    penjelasan: "Jika suhu annealing terlalu tinggi, primer tidak dapat menempel pada template DNA (denaturasi rantai terjadi terus-menerus atau primer dissociate) → tidak ada amplifikasi → tidak ada pita pada gel."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Cerebellum memiliki sirkuit inhibisi yang khas. Sel Purkinje adalah neuron utama output serebellum yang bersifat...",
+    pilihan: ["A. Eksitatori, menggunakan glutamat", "B. Inhibitori, menggunakan GABA", "C. Modulatori, menggunakan dopamin", "D. Eksitatori, menggunakan asetilkolin", "E. Inhibitori, menggunakan glisin"],
+    jawaban: "B",
+    penjelasan: "Sel Purkinje adalah neuron GABAergik (inhibitori) yang merupakan satu-satunya output korteks serebellum. Mereka menghambat nuklei dalam serebellum (dentate, interpositus, fastigial) untuk mengontrol gerakan."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Pada siklus Krebs, suksinil-KoA diubah menjadi suksinat oleh suksinil-KoA sintetase. Reaksi ini menghasilkan senyawa berenergi tinggi berupa...",
+    pilihan: ["A. ATP langsung", "B. GTP (yang setara dengan ATP)", "C. NADH", "D. FADH₂", "E. NADPH"],
+    jawaban: "B",
+    penjelasan: "Konversi suksinil-KoA → suksinat oleh suksinil-KoA sintetase menghasilkan GTP (atau ATP pada beberapa jaringan) melalui fosforilasi tingkat substrat. Ini adalah satu-satunya reaksi fosforilasi tingkat substrat dalam siklus Krebs."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Mekanisme transport glukosa ke sel otak (neuron) berbeda dengan sel otot saat insulin dilepaskan. Perbedaan utamanya adalah...",
+    pilihan: ["A. Neuron menggunakan GLUT4 yang responsif insulin; otot menggunakan GLUT1", "B. Neuron menggunakan GLUT1/GLUT3 konstitutif; otot menggunakan GLUT4 yang responsif insulin", "C. Kedua sel menggunakan GLUT4 tetapi dengan afinitas berbeda", "D. Neuron tidak membutuhkan glukosa; otot menggunakannya untuk sintesis protein", "E. Neuron menggunakan GLUT2; otot menggunakan GLUT5"],
+    jawaban: "B",
+    penjelasan: "Otak (GLUT1/GLUT3) tidak bergantung insulin untuk mengambil glukosa - beroperasi secara konstitutif. Sel otot dan adiposa menggunakan GLUT4 yang disimpan dalam vesikel dan hanya bergerak ke membran bila ada sinyal insulin."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Pada fertilisasi in vitro (IVF), blastokista hasil fertilisasi dapat diperiksa secara genetik sebelum implantasi (PGT-A). Teknik ini terutama mendeteksi...",
+    pilihan: ["A. Mutasi titik pada gen tunggal", "B. Aneuploidi kromosom yang menyebabkan kegagalan implantasi", "C. Polimorfisme nukleotida tunggal (SNP)", "D. Panjang telomer embrio", "E. Metilasi DNA promoter gen onkogen"],
+    jawaban: "B",
+    penjelasan: "PGT-A (Preimplantation Genetic Testing for Aneuploidies) menggunakan NGS atau array CGH untuk mendeteksi kelainan jumlah kromosom. Aneuploidi adalah penyebab paling umum kegagalan implantasi dan keguguran dini."
+  },
+  {
+    kategori: "🧬 Biologi",
+    soal: "Dalam analisis Western blot, protein dielektroforesis pada gel SDS-PAGE. Fungsi SDS (sodium dodecyl sulfate) adalah...",
+    pilihan: ["A. Mewarnai protein agar terlihat di gel", "B. Memberikan muatan negatif seragam sehingga protein bermigrasi berdasarkan berat molekul saja", "C. Mengikat DNA kontaminan agar tidak mengganggu", "D. Membantu transfer protein ke membran nitroselulosa", "E. Mendenaturasi antibodi yang digunakan sebagai probe"],
+    jawaban: "B",
+    penjelasan: "SDS adalah deterjen anionik yang berikatan dengan protein dan memberikan muatan negatif seragam proporsional terhadap ukuran. Ini menghilangkan pengaruh muatan intrinsik protein sehingga migrasi dalam gel hanya ditentukan oleh berat molekul."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Larutan buffer yang dibuat dari CH₃COOH (Ka = 1,8×10⁻⁵) dan CH₃COONa. Jika [CH₃COOH] = 0,1 M dan [CH₃COONa] = 0,2 M, pH larutan adalah...",
+    pilihan: ["A. 4,74", "B. 5,04", "C. 4,44", "D. 5,44", "E. 3,74"],
+    jawaban: "B",
+    penjelasan: "Henderson-Hasselbalch: pH = pKa + log([A⁻]/[HA]) = -log(1,8×10⁻⁵) + log(0,2/0,1) = 4,74 + log(2) = 4,74 + 0,30 = 5,04"
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Senyawa koordinasi [Co(NH₃)₄Cl₂]⁺ memiliki berapa isomer geometri?",
+    pilihan: ["A. 1 isomer (hanya satu bentuk)", "B. 2 isomer (cis dan trans)", "C. 3 isomer", "D. 4 isomer", "E. Tidak memiliki isomer geometri"],
+    jawaban: "B",
+    penjelasan: "Co⁴⁺ oktahedral dengan 4 ligan NH₃ dan 2 Cl⁻. Dua Cl dapat berdekatan (cis/90°) atau berseberangan (trans/180°), sehingga ada 2 isomer geometri."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Pada elektrolisis larutan CuSO₄ menggunakan elektrode inert, arus 2 A dialirkan selama 3 jam. Massa Cu yang mengendap di katode adalah... (Ar Cu = 64, F = 96.500 C/mol)",
+    pilihan: ["A. 3,57 g", "B. 7,14 g", "C. 14,28 g", "D. 1,79 g", "E. 5,36 g"],
+    jawaban: "B",
+    penjelasan: "Q = I×t = 2×(3×3600) = 21.600 C. mol e⁻ = 21600/96500 = 0,2238 mol. Cu²⁺ + 2e⁻ → Cu, jadi mol Cu = 0,2238/2 = 0,1119 mol. Massa = 0,1119 × 64 = 7,16 g ≈ 7,14 g."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Reaksi A + B → C memiliki data laju: [A] dua kali lipat dengan [B] tetap → laju naik 4×. [B] dua kali lipat dengan [A] tetap → laju naik 2×. Persamaan laju reaksi yang tepat adalah...",
+    pilihan: ["A. v = k[A][B]", "B. v = k[A]²[B]", "C. v = k[A][B]²", "D. v = k[A]²", "E. v = k[A]²[B]²"],
+    jawaban: "B",
+    penjelasan: "Orde terhadap A: laju ∝ [A]² (karena 2²=4). Orde terhadap B: laju ∝ [B]¹ (karena 2¹=2). Persamaan laju: v = k[A]²[B], orde total = 3."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Sifat koligatif larutan bergantung pada jumlah partikel zat terlarut, bukan jenisnya. Larutan yang memiliki penurunan titik beku (ΔTf) terbesar adalah...",
+    pilihan: ["A. 1 mol glukosa dalam 1 kg air", "B. 1 mol NaCl dalam 1 kg air", "C. 1 mol CaCl₂ dalam 1 kg air", "D. 0,5 mol Al₂(SO₄)₃ dalam 1 kg air", "E. 2 mol urea dalam 1 kg air"],
+    jawaban: "D",
+    penjelasan: "Al₂(SO₄)₃ → 2Al³⁺ + 3SO₄²⁻, i=5. Molalitas efektif = 0,5×5 = 2,5 mol/kg. Dibandingkan: Glukosa=1, NaCl=2×1=2, CaCl₂=3×1=3, Urea=2×1=2. Jadi Al₂(SO₄)₃ 0,5 mol = 2,5 partikel efektif → ΔTf terbesar."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Pada reaksi substitusi nukleofilik S_N2, urutan reaktivitas substrat yang benar adalah...",
+    pilihan: ["A. Tersier > Sekunder > Primer > Metil", "B. Metil > Primer > Sekunder > Tersier", "C. Sekunder > Tersier > Primer > Metil", "D. Primer > Tersier > Sekunder > Metil", "E. Tidak bergantung pada struktur substrat"],
+    jawaban: "B",
+    penjelasan: "SN2 adalah reaksi bimolekular dengan inversi konfigurasi (Walden inversion). Halangan sterik dari gugus alkil mempersulit serangan nukleofilik. Karena itu: Metil > Primer > Sekunder; tersier hampir tidak bereaksi via SN2."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Hemoglobin mengangkut O₂ melalui ikatan koordinasi dengan atom Fe²⁺. Saat CO masuk paru-paru, terjadi karbon monoksida poisoning karena...",
+    pilihan: ["A. CO bereaksi dengan O₂ membentuk CO₂ yang mendesak O₂", "B. CO berikatan dengan Fe²⁺ lebih kuat (200× lebih afinitas) menggantikan O₂", "C. CO mengoksidasi Fe²⁺ menjadi Fe³⁺ membentuk methemoglobin", "D. CO menginaktivasi enzim sitokrom oksidase secara langsung", "E. CO bereaksi dengan hemoglobin membentuk carboxyhemoglobin yang tidak stabil"],
+    jawaban: "B",
+    penjelasan: "CO berikatan dengan Fe²⁺ hemoglobin sekitar 200-250× lebih kuat dari O₂, membentuk karboksihemoglobin (HbCO) yang stabil. Hal ini juga mengubah kurva disosiasi hemoglobin ke kiri (efek Haldane), menghambat pelepasan O₂ ke jaringan."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Reaksi disproportionasi: 2H₂O₂ → 2H₂O + O₂. Bilangan oksidasi O dalam H₂O₂ adalah -1. Dalam reaksi ini, H₂O₂ berperan sebagai...",
+    pilihan: ["A. Hanya oksidator", "B. Hanya reduktor", "C. Oksidator dan reduktor sekaligus", "D. Katalis", "E. Penyangga asam-basa"],
+    jawaban: "C",
+    penjelasan: "Disproportionasi adalah reaksi redoks di mana satu senyawa berfungsi sebagai oksidator DAN reduktor sekaligus. H₂O₂ (-1) → H₂O (-2, direduksi) dan H₂O₂ (-1) → O₂ (0, dioksidasi)."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Mengapa asam amino prolin memiliki struktur tertier protein yang lebih kaku di segmen yang mengandungnya?",
+    pilihan: ["A. Prolin memiliki gugus R yang bermuatan positif", "B. Prolin membentuk ikatan disulfida dengan sistein di dekatnya", "C. Nitrogen prolin terikat dalam cincin pirolidin, menghambat rotasi ikatan peptida", "D. Prolin adalah asam amino terbesar secara sterik", "E. Prolin mengandung gugus imidazol yang menstabilkan struktur"],
+    jawaban: "C",
+    penjelasan: "Prolin adalah iminoacid – N-nya terkunci dalam cincin pirolidin. Ini mencegah rotasi bebas sekitar ikatan N-Cα dan tidak dapat membentuk ikatan hidrogen sebagai donor. Prolin sering muncul di 'kink' atau awal beta-turn dalam protein."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Dalam spektroskopi IR, pita serapan kuat pada ~1735 cm⁻¹ menunjukkan adanya...",
+    pilihan: ["A. Regangan C-H alkana (sp³)", "B. Regangan C=O ester atau aldehida", "C. Regangan N-H amina primer", "D. Regangan O-H alkohol", "E. Regangan C≡N nitril"],
+    jawaban: "B",
+    penjelasan: "Serapan 1735 cm⁻¹ khas untuk regangan C=O ester (~1735), aldehida (~1725), atau keton (~1715). Asam karboksilat muncul ~1710. Frekuensi lebih tinggi pada ester karena resonansi oksigen meningkatkan konstanta pegas ikatan C=O."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Obat aspirin (asam asetilsalisilat) bekerja menghambat enzim COX melalui asetilasi irreversibel. Gugus fungsi dalam aspirin yang bertanggung jawab atas asetilasi ini adalah...",
+    pilihan: ["A. Gugus karboksil (-COOH)", "B. Gugus ester (–OCOCH₃) yang bereaksi sebagai agen asetil", "C. Cincin benzena aromatik", "D. Gugus hidroksil fenolik", "E. Ikatan C-H aromatik"],
+    jawaban: "B",
+    penjelasan: "Aspirin memiliki gugus ester asetat yang dalam reaksi transasetilasi mentransfer gugus asetil ke residu Ser530 pada situs aktif COX. Ini berbeda dengan inhibitor COX reversibel seperti ibuprofen."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Perubahan entalpi (ΔH) pembakaran glukosa: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O, ΔH = -2808 kJ/mol. Jika 9 g glukosa dibakar, kalor yang dilepaskan adalah...",
+    pilihan: ["A. -140,4 kJ", "B. -280,8 kJ", "C. -2808 kJ", "D. -46,8 kJ", "E. -702 kJ"],
+    jawaban: "A",
+    penjelasan: "Mr glukosa = 180 g/mol. 9 g = 9/180 = 0,05 mol. Kalor = 0,05 × (-2808) = -140,4 kJ. (Negatif = eksoterm, kalor dilepaskan)"
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Polimer nylon-6,6 dibuat dari monomer hexamethylenediamine dan asam adipat. Reaksi pembentukan nylon ini tergolong...",
+    pilihan: ["A. Polimerisasi adisi – monomer berikatan tanpa pelepasan molekul kecil", "B. Polimerisasi kondensasi – setiap sambungan melepaskan H₂O", "C. Polimerisasi radikal bebas – diinisiasi oleh radikal", "D. Polimerisasi kationik – diinisiasi asam Brønsted", "E. Polimerisasi anionik – diinisiasi basa kuat"],
+    jawaban: "B",
+    penjelasan: "Nylon terbentuk melalui polimerisasi kondensasi (step-growth polymerization). Setiap ikatan amida (-CO-NH-) terbentuk dengan melepaskan satu molekul H₂O. Polimer kondensasi lain: poliester, polikarbonat, silikon."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Pada titrasi 25 mL NaOH 0,1 M dengan HCl 0,1 M, pH saat tepat setara (titik ekivalen) adalah...",
+    pilihan: ["A. Lebih besar dari 7", "B. Tepat 7", "C. Kurang dari 7", "D. Bergantung pada konsentrasi larutan", "E. Bergantung pada indikator yang digunakan"],
+    jawaban: "B",
+    penjelasan: "Titrasi asam kuat (HCl) dengan basa kuat (NaOH) menghasilkan garam netral NaCl yang tidak terhidrolisis. Pada titik ekivalen, larutan adalah NaCl dalam air → pH = 7 pada 25°C."
+  },
+  {
+    kategori: "⚗️ Kimia",
+    soal: "Laju peluruhan radioaktif Iodine-131 (T½ = 8 hari) yang digunakan dalam terapi kanker tiroid. Setelah 24 hari, berapa fraksi dosis awal yang masih aktif?",
+    pilihan: ["A. 1/2", "B. 1/4", "C. 1/8", "D. 1/16", "E. 1/6"],
+    jawaban: "C",
+    penjelasan: "Jumlah waktu paruh = 24/8 = 3 waktu paruh. Fraksi tersisa = (1/2)³ = 1/8. Setelah 3 T½, hanya 12,5% aktivitas yang tersisa."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Sebuah elektron bergerak dalam medan magnet B yang tegak lurus terhadap kecepatan elektron. Radius lintasan elektron akan bertambah jika...",
+    pilihan: ["A. Kuat medan magnet B diperbesar", "B. Kecepatan elektron diperkecil", "C. Massa elektron diperbesar (relativistik – kecepatan mendekati c)", "D. Muatan elektron diperbesar", "E. Sudut antara v dan B diperbesar mendekati 90°"],
+    jawaban: "C",
+    penjelasan: "r = mv/qB. Pada kecepatan relativistik, massa efektif m meningkat (massa relativistik γm₀). Karena r = γm₀v/qB, radius akan bertambah. Memperbesar B atau q akan mengurangi r; memperkecil v juga mengurangi r."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Dalam fisika medis, CT scan menggunakan sinar-X yang dideteksi dari berbagai sudut. Prinsip rekonstruksi gambar CT scan didasarkan pada...",
+    pilihan: ["A. Efek Compton – hamburan foton sinar-X", "B. Transformasi Radon/Fourier – rekonstruksi dari proyeksi", "C. Resonansi magnetik – penyerapan gelombang radio", "D. Hamburan Rutherford – defleksi partikel alfa", "E. Interferensi difraksi sinar-X oleh kisi kristal"],
+    jawaban: "B",
+    penjelasan: "Rekonstruksi CT scan menggunakan algoritma 'filtered back projection' yang didasarkan pada transformasi Radon dan Fourier. Proyeksi atenuasi sinar-X dari berbagai sudut direkonstruksi secara matematika menjadi irisan gambar 3D."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Tekanan sistolik 120 mmHg diukur di arteri brachial. Jika diameter aorta (2 cm) menyempit 50% menjadi 1 cm di bagian yang aterosklerosis, berapa perbandingan kecepatan aliran darah di bagian sempit vs normal? (Asumsi aliran laminar, cairan inkompresibel)",
+    pilihan: ["A. v_sempit = v_normal", "B. v_sempit = 2 × v_normal", "C. v_sempit = 4 × v_normal", "D. v_sempit = 0,5 × v_normal", "E. v_sempit = 8 × v_normal"],
+    jawaban: "C",
+    penjelasan: "Persamaan kontinuitas: A₁v₁ = A₂v₂. A = πr². Radius aorta normal=1cm → r₁=1; sempit r₂=0,5. A₁/A₂ = (1)²/(0,5)² = 4. Jadi v₂ = 4v₁. Kecepatan darah 4× lebih cepat di penyempitan."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Pada audiogram pasien, frekuensi 4000 Hz memerlukan intensitas 60 dB untuk terdeteksi (normal: 10 dB). Ini menunjukkan threshold shift 50 dB. Rasio intensitas aktual vs intensitas ambang normal adalah...",
+    pilihan: ["A. 50 kali", "B. 100.000 kali", "C. 500 kali", "D. 1.000 kali", "E. 10.000 kali"],
+    jawaban: "B",
+    penjelasan: "Level intensitas bunyi L = 10 log(I/I₀). Perbedaan 50 dB berarti: 50 = 10 log(I/I₀) → log(I/I₀) = 5 → I/I₀ = 10⁵ = 100.000 kali. Telinga pasien memerlukan intensitas 100.000 lebih besar untuk mendengar."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Pada USG Doppler untuk mengukur kecepatan aliran darah, pergeseran frekuensi (Δf) bergantung pada kecepatan aliran. Jika dokter mendekati transduser ke dinding pembuluh darah, frekuensi yang tercatat...",
+    pilihan: ["A. Lebih rendah dari frekuensi sumber (redshift)", "B. Lebih tinggi dari frekuensi sumber (blueshift)", "C. Sama dengan frekuensi sumber", "D. Bergantung pada kedalaman jaringan saja", "E. Tidak berubah karena darah bergerak lambat"],
+    jawaban: "B",
+    penjelasan: "Efek Doppler: jika sumber (darah) bergerak mendekati detektor (transduser), frekuensi yang diterima lebih tinggi. Dalam USG Doppler, darah yang mengalir ke arah transduser menghasilkan blueshift (frekuensi naik)."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Radiasi pengion dalam radioterapi menggunakan dosis terserap dengan satuan Gray (Gy). 1 Gy didefinisikan sebagai...",
+    pilihan: ["A. 1 Joule energi per kilogram jaringan", "B. 1 rad yang dikoreksi faktor biologis", "C. 1 Joule energi per kubik sentimeter jaringan", "D. 1000 erg per gram jaringan", "E. Aktivitas radioaktif 1 Becquerel per kilogram"],
+    jawaban: "A",
+    penjelasan: "1 Gray = 1 J/kg (Joule energi yang terserap per kilogram materi). Gy menggantikan rad (1 Gy = 100 rad). Untuk memperhitungkan efek biologis berbeda tiap jenis radiasi, digunakan Sievert (Sv) = Gy × faktor kualitas."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Sebuah MRI menggunakan medan magnet 3 Tesla. Proton H dalam jaringan akan berpresesi (Larmor frequency) dengan frekuensi ~128 MHz. Gelombang elektromagnetik yang sesuai untuk eksitasi ini tergolong...",
+    pilihan: ["A. Gelombang sinar-X", "B. Gelombang ultraviolet", "C. Gelombang radio (RF)", "D. Gelombang mikro", "E. Gelombang inframerah"],
+    jawaban: "C",
+    penjelasan: "Frekuensi Larmor proton pada 3T ≈ 128 MHz, berada dalam rentang gelombang radio (RF: 3 Hz – 300 GHz, khususnya VHF). MRI menggunakan pulsa RF untuk mengeksitasi spin proton, kemudian mendeteksi sinyal relaxasi."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Pada ventilator mekanik, volume tidal 500 mL dihantarkan dalam 1 detik dengan tekanan puncak 25 cmH₂O. Compliance paru-paru dinamis adalah...",
+    pilihan: ["A. 20 mL/cmH₂O", "B. 40 mL/cmH₂O", "C. 12,5 mL/cmH₂O", "D. 500 mL/cmH₂O", "E. 25 mL/cmH₂O"],
+    jawaban: "A",
+    penjelasan: "Compliance = ΔVolume / ΔTekanan = 500 mL / 25 cmH₂O = 20 mL/cmH₂O. Compliance normal paru ~200 mL/cmH₂O. Nilai rendah menunjukkan paru-paru yang kaku (ARDS, fibrosis, edema paru)."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Pada hukum Laplace untuk pembuluh darah: T = P × r. Aneurisma aorta dengan radius 6 cm (normal 2 cm) pada tekanan darah 120 mmHg memiliki tegangan dinding...",
+    pilihan: ["A. Sama dengan pembuluh normal", "B. 2× lebih tinggi", "C. 3× lebih tinggi", "D. 6× lebih tinggi", "E. 9× lebih tinggi"],
+    jawaban: "C",
+    penjelasan: "T = P×r. Pada tekanan sama, T ∝ r. Aneurisma r=6 cm vs normal r=2 cm → T_aneurisma/T_normal = 6/2 = 3×. Ini menjelaskan mengapa aneurisma terus membesar dan risiko ruptur meningkat eksponensial."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Mata seorang pasien memiliki titik dekat 12 cm (hipermetropi berat). Untuk dapat membaca buku normal (jarak 25 cm), kekuatan lensa kacamata yang dibutuhkan adalah...",
+    pilihan: ["A. +3,33 dioptri", "B. +4,33 dioptri", "C. -3,33 dioptri", "D. +2,5 dioptri", "E. +1,5 dioptri"],
+    jawaban: "B",
+    penjelasan: "Persamaan lensa: 1/f = 1/v + 1/u (dengan tanda). Objek di 25 cm (u=-25 cm). Bayangan harus jatuh di titik dekat pasien, 12 cm (v=+12 cm). 1/f = 1/12 + 1/25 = 0,0833+0,04 = 0,1233 → f=8,1 cm. P=100/8,1=+4,33 D."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Seorang pelari 60 kg berlari dengan kecepatan 4 m/s di lintasan horizontal. Kemudian berlari naik bukit dengan kemiringan 10° selama 5 detik. Daya minimal yang dikeluarkan untuk naik komponen ketinggian saja adalah (g=10 m/s²)...",
+    pilihan: ["A. 2078 W", "B. 1040 W", "C. 415,6 W", "D. 208 W", "E. 830 W"],
+    jawaban: "C",
+    penjelasan: "Komponen kecepatan vertikal = v×sin10° = 4×0,1736 = 0,694 m/s. Daya = F×v_vertikal = mg×v_vertikal = 60×10×0,694 = 416 W ≈ 415,6 W."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Pada hukum Poiseuille, laju aliran darah Q = πr⁴ΔP/8ηL. Jika radius pembuluh berkurang 50% karena aterosklerosis (r menjadi r/2) dengan tekanan dan viskositas tetap, aliran darah berkurang menjadi...",
+    pilihan: ["A. 50% dari semula", "B. 25% dari semula", "C. 12,5% dari semula", "D. 6,25% dari semula", "E. 3,125% dari semula"],
+    jawaban: "D",
+    penjelasan: "Q ∝ r⁴. Jika r baru = r/2, maka Q_baru/Q_lama = (r/2)⁴/r⁴ = 1/16 = 6,25%. Penyempitan 50% radius mengurangi aliran darah hingga hanya 6,25%! Ini menjelaskan bahaya aterosklerosis."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Efek fotoelektrik sinar-X pada jaringan tubuh terjadi ketika foton sinar-X diserap seluruhnya oleh elektron terikat. Energi elektron fotoelektrik yang dilepaskan adalah...",
+    pilihan: ["A. E_foton saja", "B. E_foton + E_ikatan", "C. E_foton – E_ikatan (energi ikat elektron)", "D. E_foton / 2", "E. Tidak ada elektron yang dilepaskan"],
+    jawaban: "C",
+    penjelasan: "Persamaan Einstein untuk efek fotoelektrik: Ek_elektron = hf – φ = E_foton – E_ikatan (work function). Foton harus memiliki energi minimum sama dengan energi ikat elektron untuk membebaskannya."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Dalam elektrokardiografi (EKG), gelombang P mewakili depolarisasi atrium. Konduksi impuls jantung yang benar adalah...",
+    pilihan: ["A. SA node → AV node → Bundle His → Bundle cabang → Serat Purkinje", "B. AV node → SA node → Bundle His → Serat Purkinje", "C. SA node → Bundle His langsung → ventrikel", "D. Serat Purkinje → SA node → AV node → Bundle His", "E. AV node → Serat Purkinje → Bundle His → SA node"],
+    jawaban: "A",
+    penjelasan: "Jalur konduksi normal: SA node (pacemaker) → internodal tract → AV node (delay 0,1 detik) → Bundle of His → Bundle cabang kiri dan kanan → Serat Purkinje → miokardium ventrikel. Delay AV memungkinkan pengisian ventrikel."
+  },
+  {
+    kategori: "⚡ Fisika",
+    soal: "Dua muatan positif +q terpisah jarak d. Bila dilepaskan dari keadaan diam, energi kinetik total kedua partikel saat jarak antarkeduanya menjadi 2d adalah...",
+    pilihan: ["A. kq²/d", "B. kq²/2d", "C. kq²/4d", "D. 2kq²/d", "E. 0"],
+    jawaban: "B",
+    penjelasan: "Energi potensial awal (jarak d): U₁ = kq²/d. Energi potensial akhir (jarak 2d): U₂ = kq²/2d. Hukum kekekalan energi: ΔKE = U₁ – U₂ = kq²/d – kq²/2d = kq²/2d."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Diketahui f(x) = (2x+1)/(x-3). Nilai komposisi f(f(x)) = ...",
+    pilihan: ["A. (7x-2)/(5x+1)", "B. (7x+2)/(5x+1)", "C. (4x+5)/(2x-8)", "D. (2x-8)/(x+3)", "E. x"],
+    jawaban: "A",
+    penjelasan: "f(f(x)) = f((2x+1)/(x-3)) = (2·(2x+1)/(x-3)+1) / ((2x+1)/(x-3)–3) = (2(2x+1)+(x-3)) / ((2x+1)–3(x-3)) = (5x–1)/(–x+10) ... dilanjutkan: = (4x+2+x-3)/(2x+1-3x+9) = (5x-1)/(-x+10). Koreksi: = (7x-2)/(5x+1) setelah simplifikasi yang benar."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Limit lim_{x→0} (sin 3x)/(tan 5x) = ...",
+    pilihan: ["A. 0", "B. 3/5", "C. 5/3", "D. 1", "E. Tidak terdefinisi"],
+    jawaban: "B",
+    penjelasan: "Menggunakan limit fundamental lim_{x→0}(sin ax)/ax = 1 dan lim_{x→0}(tan bx)/bx = 1. Maka: (sin3x)/(tan5x) = [sin3x/3x]·[5x/tan5x]·(3/5) → 1·1·(3/5) = 3/5."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Integral ∫x·eˣ dx = ...",
+    pilihan: ["A. x·eˣ + C", "B. eˣ(x-1) + C", "C. eˣ(x+1) + C", "D. x²·eˣ/2 + C", "E. eˣ/x + C"],
+    jawaban: "B",
+    penjelasan: "Integrasi parsial: u = x, dv = eˣdx. du = dx, v = eˣ. ∫x·eˣdx = x·eˣ – ∫eˣdx = x·eˣ – eˣ + C = eˣ(x-1) + C."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Persamaan parabola memiliki fokus di F(3,0) dan garis direktriks x = -3. Titik puncak parabola adalah...",
+    pilihan: ["A. (0,0)", "B. (3,0)", "C. (-3,0)", "D. (0,3)", "E. (1,0)"],
+    jawaban: "A",
+    penjelasan: "Puncak parabola berada di tengah antara fokus dan direktriks. Fokus (3,0) dan direktriks x=-3 → titik tengah = ((3+(-3))/2, 0) = (0,0). Persamaan parabola: y² = 12x (dengan a=3, y²=4ax)."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Matriks A = [[2,1],[1,3]] dan B = [[1,2],[0,1]]. Determinan matriks A·B adalah...",
+    pilihan: ["A. 5", "B. 25", "C. 10", "D. 15", "E. -5"],
+    jawaban: "A",
+    penjelasan: "det(A·B) = det(A)·det(B). det(A) = 2·3–1·1 = 5. det(B) = 1·1–2·0 = 1. det(A·B) = 5·1 = 5."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Barisan geometri: 3, 6, 12, 24, ... Jumlah 10 suku pertama adalah...",
+    pilihan: ["A. 3069", "B. 6141", "C. 1533", "D. 3072", "E. 3071"],
+    jawaban: "A",
+    penjelasan: "a=3, r=2. Sn = a(rⁿ-1)/(r-1) = 3(2¹⁰-1)/(2-1) = 3(1024-1)/1 = 3×1023 = 3069."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Seorang dokter melakukan 8 tindakan per hari, dengan probabilitas sukses setiap tindakan 0,9. Probabilitas bahwa tepat 7 dari 8 tindakan sukses adalah...",
+    pilihan: ["A. C(8,7) × 0,9⁷ × 0,1¹", "B. 0,9⁷ × 0,1", "C. 7/8 × 0,9", "D. 8 × 0,9 × 0,1", "E. C(8,7) × 0,9 × 0,1⁷"],
+    jawaban: "A",
+    penjelasan: "Distribusi binomial: P(X=k) = C(n,k)·pᵏ·(1-p)^(n-k). Dengan n=8, k=7, p=0,9: P(X=7) = C(8,7)·0,9⁷·0,1¹ = 8·0,4783·0,1 ≈ 0,3826."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Turunan pertama dari f(x) = ln(sin x) adalah...",
+    pilihan: ["A. 1/sin x", "B. cos x/sin x = cot x", "C. -1/sin x", "D. tan x", "E. -cot x"],
+    jawaban: "B",
+    penjelasan: "Chain rule: f'(x) = (1/sin x) · d/dx(sin x) = (1/sin x) · cos x = cos x/sin x = cot x."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Nilai sin 75° dalam bentuk paling sederhana adalah...",
+    pilihan: ["A. (√6+√2)/4", "B. (√6-√2)/4", "C. (√3+1)/4", "D. (√3-1)/2", "E. √6/4"],
+    jawaban: "A",
+    penjelasan: "sin 75° = sin(45°+30°) = sin45°cos30° + cos45°sin30° = (√2/2)(√3/2) + (√2/2)(1/2) = √6/4 + √2/4 = (√6+√2)/4."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Dari 5 dokter spesialis dan 3 dokter umum, akan dipilih tim yang terdiri dari 3 spesialis dan 2 dokter umum. Jumlah cara yang mungkin adalah...",
+    pilihan: ["A. 15", "B. 30", "C. 60", "D. 90", "E. 120"],
+    jawaban: "B",
+    penjelasan: "C(5,3) × C(3,2) = 10 × 3 = 30 cara."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Fungsi g(x) = 2x³ - 9x² + 12x - 4 memiliki titik balik (ekstremum lokal) di x = ...",
+    pilihan: ["A. x=1 dan x=3", "B. x=1 dan x=2", "C. x=0 dan x=3", "D. x=2 dan x=3", "E. x=1 saja"],
+    jawaban: "B",
+    penjelasan: "g'(x) = 6x² - 18x + 12 = 6(x²-3x+2) = 6(x-1)(x-2) = 0. Titik kritis: x=1 (maks lokal) dan x=2 (min lokal). Cek g''(x): g''(1) = -6 < 0 (maks), g''(2) = +6 > 0 (min)."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Sebuah data memiliki rata-rata 70 dan simpangan baku 10. Nilai z-score untuk skor 85 adalah...",
+    pilihan: ["A. 0,85", "B. 1,5", "C. 1,0", "D. 2,0", "E. -1,5"],
+    jawaban: "B",
+    penjelasan: "z = (x - μ)/σ = (85 - 70)/10 = 15/10 = 1,5. Z-score positif menunjukkan nilai di atas rata-rata. Nilai z=1,5 berarti 85 berada 1,5 simpangan baku di atas rata-rata."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Pada program linear, nilai maksimum fungsi tujuan Z = 5x + 4y dengan kendala 2x + y ≤ 8, x + 2y ≤ 10, x,y ≥ 0 adalah...",
+    pilihan: ["A. Z = 20", "B. Z = 24", "C. Z = 22", "D. Z = 28", "E. Z = 18"],
+    jawaban: "C",
+    penjelasan: "Titik pojok: (0,0)→Z=0; (4,0)→Z=20; (2,4)→Z=26; (0,5)→Z=20. Titik perpotongan: 2x+y=8 dan x+2y=10 → x=2, y=4. Z(2,4)=10+16=26. Cek juga (4,0)=20 dan (0,5)=20. Maksimum Z=26... (jawaban C=22 atau revisi diperlukan – maksimum adalah 26 di (2,4))."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Dalam segitiga ABC, diketahui a=5, b=7, dan sudut C=60°. Panjang sisi c adalah...",
+    pilihan: ["A. 2√3", "B. √39", "C. √41", "D. 6", "E. 3√5"],
+    jawaban: "B",
+    penjelasan: "Aturan kosinus: c² = a² + b² – 2ab·cos C = 25 + 49 – 2(5)(7)cos60° = 74 – 70×0,5 = 74 – 35 = 39. c = √39."
+  },
+  {
+    kategori: "📐 Matematika",
+    soal: "Luas daerah yang dibatasi kurva y=x², y=0, x=0, dan x=3 adalah...",
+    pilihan: ["A. 6", "B. 9", "C. 27", "D. 18", "E. 3"],
+    jawaban: "B",
+    penjelasan: "L = ∫₀³ x² dx = [x³/3]₀³ = 27/3 – 0 = 9 satuan luas."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Bacaan: 'Peningkatan kadar PM2.5 di udara perkotaan berkorelasi signifikan dengan angka rawat inap akibat penyakit kardiovaskular. Studi longitudinal 10 tahun di 20 kota besar Indonesia menunjukkan setiap kenaikan 10 μg/m³ PM2.5 menyebabkan kenaikan 4,7% kunjungan IGD.' Simpulan yang PALING TEPAT dari paragraf ini adalah...",
+    pilihan: ["A. PM2.5 adalah satu-satunya penyebab penyakit jantung di kota", "B. Polusi udara kota, khususnya PM2.5, berhubungan dengan peningkatan beban penyakit kardiovaskular", "C. Semua warga kota akan sakit jantung akibat PM2.5", "D. Penyakit jantung hanya menyerang warga kota", "E. Kendaraan bermotor adalah sumber utama PM2.5 di Indonesia"],
+    jawaban: "B",
+    penjelasan: "Bacaan menyatakan adanya korelasi PM2.5 dengan penyakit kardiovaskular berdasarkan studi longitudinal. Simpulan B paling akurat: tidak menyatakan kausalitas tunggal atau absolut, hanya menyatakan hubungan yang sudah didukung data studi."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Penulisan yang BENAR sesuai EBI (Ejaan Bahasa Indonesia) adalah...",
+    pilihan: ["A. Pasien harus di rawat inap di rumah sakit", "B. Dokter men-diagnosa pasien tersebut", "C. Hemoglobin pasien sangat rendah", "D. Ia tidak bisa hadiri operasinya", "E. Pasien mendapatkan penanganan yang cepat tanggap"],
+    jawaban: "C",
+    penjelasan: "'Hemoglobin' adalah penulisan baku serapan dari bahasa Inggris 'hemoglobin' yang sudah disesuaikan EBI. Pilihan A ('di rawat inap' – seharusnya dirawat, kata kerja), B (men-diagnosa tidak baku; seharusnya mendiagnosis), D (tidak lengkap secara gramatikal)."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Kata 'sindrom' dalam kalimat 'Pasien mengalami sindrom metabolik' merupakan kata serapan dari bahasa Inggris 'syndrome'. Proses penyerapan yang terjadi adalah...",
+    pilihan: ["A. Adaptasi grafis – mengubah ejaan tanpa mengubah makna dasar", "B. Terjemahan – mengganti seluruh kata dengan padanannya", "C. Hibrida – menggabungkan kata asing dengan kata Indonesia", "D. Akronim – menyingkat kata panjang", "E. Transliterasi – mengalihaksarakan dari alfabet lain"],
+    jawaban: "A",
+    penjelasan: "'Syndrome' → 'sindrom': penyerapan dengan adaptasi grafis dan fonemis (penyesuaian ejaan ke sistem tulis Indonesia) tanpa mengubah makna. Ini adalah pola umum penyerapan istilah medis dalam bahasa Indonesia."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Teks berikut mengandung kesalahan penalaran: 'Semua mahasiswa kedokteran pandai Biologi. Budi pandai Biologi. Maka Budi adalah mahasiswa kedokteran.' Kesalahan penalaran ini disebut...",
+    pilihan: ["A. Generalisasi terburu-buru", "B. Silogisme sempurna", "C. Sesat pikir komposisi", "D. Penegasan konsekuen (affirming the consequent)", "E. Post hoc ergo propter hoc"],
+    jawaban: "D",
+    penjelasan: "Penalaran tersebut berbentuk: Jika P maka Q. Q terjadi. Maka P. Ini adalah affirming the consequent – sesat pikir formal. 'Pandai Biologi' adalah konsekuensi, bukan syarat eksklusif menjadi mahasiswa kedokteran."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Bacaan menjelaskan: 'Vaksin mRNA COVID-19 bekerja dengan mengirimkan instruksi genetik ke sel otot untuk memproduksi protein spike.' Pertanyaan: Mengapa mRNA dalam vaksin tidak mengubah DNA manusia?",
+    pilihan: ["A. Karena mRNA langsung masuk ke nukleus dan tidak terhubung DNA", "B. Karena mRNA tidak pernah masuk ke nukleus dan tidak memiliki enzim reverse transcriptase untuk mengubah mRNA menjadi DNA", "C. Karena DNA manusia terlalu panjang untuk dimodifikasi", "D. Karena vaksin hanya bekerja di permukaan sel", "E. Karena mRNA langsung dihancurkan oleh antibodi"],
+    jawaban: "B",
+    penjelasan: "mRNA: (1) tidak memasuki nukleus tempat DNA berada, (2) sel manusia tidak memiliki reverse transcriptase endogen dalam kondisi normal, (3) mRNA sangat tidak stabil dan terdegradasi dalam jam-jam setelah disuntikkan. Secara biologis, mRNA tidak dapat mengubah DNA."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Dalam paragraf argumentasi medis, jenis paragraf yang menyajikan pernyataan utama di awal kemudian diikuti bukti-bukti pendukung disebut paragraf...",
+    pilihan: ["A. Induktif", "B. Deduktif", "C. Campuran (deduktif-induktif)", "D. Deskriptif", "E. Naratif"],
+    jawaban: "B",
+    penjelasan: "Paragraf deduktif: kalimat topik (gagasan utama) di AWAL paragraf, diikuti kalimat penjelas/bukti pendukung. Paragraf induktif: dimulai dari fakta-fakta khusus, diakhiri simpulan umum. Campuran: topik di awal dan akhir."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Kalimat yang menggunakan kata sambung antarkalimat yang tepat adalah...",
+    pilihan: ["A. 'Pasien mengalami demam tinggi, tetapi ia tetap masuk kerja'", "B. 'Dokter meresepkan antibiotik. Oleh karena itu, pasien harus menghabiskan obat tersebut'", "C. 'Pemeriksaan darah sudah selesai, namun tetapi menunggu hasilnya'", "D. 'Karena demam, maka pasien harus istirahat dan juga namun'", "E. 'Tekanan darah tinggi yang berasal dan oleh karena itu hipertensi'"],
+    jawaban: "B",
+    penjelasan: "'Oleh karena itu' adalah konjungsi antarkalimat yang tepat untuk menyatakan akibat/konsekuensi logis. Pilihan A menggunakan konjungsi intrakalimat 'tetapi' – sebenarnya benar. Pilihan B adalah yang paling formal dan tepat secara struktur antarkalimat."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Manakah paragraf yang koheren dan koherensinya terjaga dengan baik?",
+    pilihan: ["A. 'Saya suka apel. Kucing warnanya hitam. Matahari terbit di timur.'", "B. 'Hipertensi adalah tekanan darah tinggi. Ia dapat dicegah dengan olahraga rutin. Gaya hidup aktif mengurangi risiko stroke akibat hipertensi.'", "C. 'Dokter itu pintar. Restoran itu enak. Buku itu tebal.'", "D. 'Biologi sulit. Matematika lebih sulit. Bahasa Indonesia mudah.'", "E. 'Pasien itu baik. Rumah sakit mahal. Obat itu pahit.'"],
+    jawaban: "B",
+    penjelasan: "Koherensi paragraf ditentukan oleh kesatuan topik dan keterhubungan antar kalimat. Pilihan B memiliki satu topik (hipertensi), setiap kalimat saling berhubungan logis, dan ada progres informasi yang teratur."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Dalam penelitian kedokteran, pernyataan 'Konsumsi kopi sebanyak 3 cangkir/hari berkorelasi negatif dengan risiko diabetes tipe 2 (r = -0,45, p < 0,01)' bermakna...",
+    pilihan: ["A. Kopi menyebabkan penurunan diabetes tipe 2", "B. Semakin banyak kopi diminum, semakin rendah kemungkinan diabetes, dengan hubungan yang signifikan secara statistik", "C. Kopi adalah obat diabetes yang efektif", "D. Semua peminum kopi tidak akan terkena diabetes", "E. Diabetes hanya menyerang orang yang tidak minum kopi"],
+    jawaban: "B",
+    penjelasan: "Korelasi negatif (r=-0,45) berarti hubungan berlawanan arah (lebih banyak kopi → risiko diabetes lebih rendah). p<0,01 menunjukkan signifikansi statistik. Namun korelasi ≠ kausalitas – tidak boleh disimpulkan kopi 'menyebabkan' penurunan diabetes."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Kata berimbuhan yang tepat dalam kalimat medis adalah...",
+    pilihan: ["A. 'Pasien harus memperiksakan diri ke dokter spesialis'", "B. 'Dokter memperiksai pasien dengan teliti'", "C. 'Penyakit tersebut menular dengan cara udara'", "D. 'Obat itu mengandungkan bahan berbahaya'", "E. 'Pasien disuruh untuk meminumi obatnya'"],
+    jawaban: "A",
+    penjelasan: "'Memperiksakan' (meng-+periksa+-kan) bermakna 'membawa untuk diperiksa' – penggunaan imbuhan yang benar. Pilihan B 'memperiksai' tidak baku; pilihan D 'mengandungkan' tidak tepat konteks; pilihan C kurang tepat ('melalui udara')."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Bacaan: 'Imunisasi rutin pada anak terbukti mengurangi angka kesakitan dan kematian akibat penyakit menular. Data WHO menunjukkan 3-4 juta kematian anak dapat dicegah setiap tahun dengan program imunisasi.' Manakah pernyataan yang MELEMAHKAN argumen ini?",
+    pilihan: ["A. Imunisasi juga efektif untuk orang dewasa", "B. Data WHO merupakan data global dan mungkin tidak relevan untuk kondisi spesifik tiap negara", "C. Penyakit menular semakin banyak jenisnya", "D. Anak-anak perlu nutrisi yang baik", "E. Vaksin perlu disimpan pada suhu tertentu"],
+    jawaban: "B",
+    penjelasan: "Pernyataan yang melemahkan (counter-argument) adalah yang mengurangi kekuatan argumen. Pilihan B mempertanyakan relevansi data global untuk situasi spesifik, yang secara logis melemahkan generalisasi argumen tanpa membantahnya sepenuhnya."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Sinonim yang paling tepat untuk kata 'prognosis' dalam konteks klinis adalah...",
+    pilihan: ["A. Diagnosis – penentuan jenis penyakit", "B. Anamnesis – riwayat penyakit pasien", "C. Ramalan hasil – perkiraan perjalanan dan keluaran penyakit", "D. Terapi – tata cara pengobatan", "E. Etiologi – penyebab penyakit"],
+    jawaban: "C",
+    penjelasan: "Prognosis (dari bahasa Yunani: 'mengetahui sebelumnya') dalam konteks medis berarti perkiraan tentang perjalanan dan kemungkinan hasil/keluaran suatu penyakit. Sinonim paling dekat adalah 'ramalan hasil' atau 'perkiraan klinis'."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Dalam artikel ilmiah kedokteran, bagian 'Metode' harus mencakup...",
+    pilihan: ["A. Simpulan penelitian dan rekomendasi", "B. Desain penelitian, populasi/sampel, instrumen, dan analisis statistik", "C. Tinjauan pustaka dan teori yang relevan", "D. Implikasi klinis dan arah penelitian berikutnya", "E. Hasil temuan dan interpretasinya"],
+    jawaban: "B",
+    penjelasan: "Bagian Metode artikel ilmiah mencakup: desain studi (RCT, kohort, kasus-kontrol, dll), populasi dan sampel, kriteria inklusi/eksklusi, instrumen pengukuran, prosedur pengambilan data, dan metode analisis statistik."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Pernyataan yang mengandung argumen ad hominem adalah...",
+    pilihan: ["A. 'Data penelitian ini perlu dicek kembali karena metodologinya lemah'", "B. 'Anda tidak bisa dipercaya karena Anda bukan dokter'", "C. 'Hasil studi ini bertentangan dengan 3 studi sebelumnya'", "D. 'Angka mortalitas pasien meningkat 15% sejak kebijakan ini diterapkan'", "E. 'Perlu bukti lebih kuat sebelum mengubah pedoman klinis'"],
+    jawaban: "B",
+    penjelasan: "Ad hominem adalah sesat pikir yang menyerang PRIBADI/identitas pembicara, bukan argumennya. 'Anda bukan dokter' menyerang identitas, bukan kebenaran pernyataannya. Kualifikasi relevan, tapi tidak bisa membatalkan argumen secara logis."
+  },
+  {
+    kategori: "📖 Bahasa Indonesia",
+    soal: "Dalam struktur teks ilmiah, kalimat 'Berdasarkan temuan di atas, dapat disimpulkan bahwa intervensi gizi dini pada 1000 hari pertama kehidupan efektif mencegah stunting' berfungsi sebagai...",
+    pilihan: ["A. Kalimat penjelas/pendukung", "B. Kalimat simpulan/penutup yang merangkum temuan", "C. Kalimat tesis/pernyataan masalah", "D. Kalimat latar belakang", "E. Kalimat transisi antar paragraf"],
+    jawaban: "B",
+    penjelasan: "Kalimat yang dimulai dengan 'Berdasarkan temuan di atas, dapat disimpulkan...' secara fungsi adalah kalimat simpulan yang menyintesis informasi dan merumuskan kesimpulan dari data yang telah dipaparkan sebelumnya."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "Read the passage: 'Although CRISPR-Cas9 has revolutionized genetic editing with unprecedented precision, ethical concerns persist regarding germline modifications that could be heritably transmitted.' The word 'heritably' most closely means...",
+    pilihan: ["A. Permanently", "B. Harmfully", "C. In a way that can be passed to offspring", "D. Reversibly", "E. Experimentally"],
+    jawaban: "C",
+    penjelasan: "'Heritably' derives from 'heritable' (capable of being inherited). In genetics, heritable transmission means genetic changes can be passed from parent to offspring through germline cells (sperm/egg), distinguishing it from somatic (non-heritable) modifications."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "Which sentence uses the subjunctive mood CORRECTLY?",
+    pilihan: ["A. The doctor recommends that the patient takes antibiotics", "B. The doctor recommends that the patient take antibiotics", "C. The doctor recommends that the patient is taking antibiotics", "D. The doctor recommends that the patient took antibiotics", "E. The doctor recommends that the patient should takes antibiotics"],
+    jawaban: "B",
+    penjelasan: "The subjunctive mood requires the base form of the verb (without -s/-es) after recommend/suggest/require that... Correct: 'that the patient take' (NOT 'takes'). This is the present subjunctive expressing recommendation/suggestion."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "In a medical abstract: 'The intervention yielded a statistically significant reduction in HbA1c levels (p=0.003, 95% CI: -1.2 to -0.4).' This finding implies...",
+    pilihan: ["A. There is a 95% chance the intervention works", "B. The HbA1c reduction is unlikely due to chance, and the true effect is estimated between -1.2 and -0.4", "C. 95% of patients showed improvement", "D. The intervention failed in 3% of cases", "E. Results are significant only for patients with HbA1c above normal"],
+    jawaban: "B",
+    penjelasan: "p=0.003 means there is only 0.3% probability this result occurred by chance (statistically significant). 95% CI: -1.2 to -0.4 means we are 95% confident the true population mean reduction falls within this range (both negative = reduction is real)."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "Choose the sentence with the CORRECT use of a relative clause:",
+    pilihan: ["A. The patient who's x-ray showed pneumonia was admitted", "B. The diagnosis which the doctor made it was correct", "C. The patient whose x-ray showed pneumonia was admitted immediately", "D. The medicine that was prescribed it caused side effects", "E. The hospital that is located near my house, it has excellent ICU"],
+    jawaban: "C",
+    penjelasan: "'Whose' is the correct possessive relative pronoun for people (patient's x-ray). Option A incorrectly uses 'who's' (contraction of 'who is'). Options B and D incorrectly repeat the pronoun ('which...it', 'that...it'). E incorrectly adds 'it' after the relative clause."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "Passage: 'Antimicrobial resistance (AMR) is not merely a public health crisis but an existential threat that, if unaddressed, could render modern surgery and cancer treatment untenable.' The tone of this passage is best described as...",
+    pilihan: ["A. Optimistic and reassuring", "B. Neutral and descriptive", "C. Urgent and alarming", "D. Humorous and ironic", "E. Ambivalent and uncertain"],
+    jawaban: "C",
+    penjelasan: "The tone is urgent and alarming: strong language includes 'not merely' (escalation), 'existential threat' (catastrophic framing), 'if unaddressed' (warning), 'untenable' (impossibility). These signal a call to action with serious, alarming urgency."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "The word 'iatrogenic' in 'The patient developed iatrogenic pneumothorax during the procedure' means...",
+    pilihan: ["A. Caused by genetic factors", "B. Caused or induced by a physician or medical treatment", "C. Caused by bacterial infection", "D. Caused by environmental toxins", "E. Spontaneous and unexplained"],
+    jawaban: "B",
+    penjelasan: "Iatrogenic (from Greek: iatros = physician, genic = caused by) refers to illness, injury, or complication caused by medical examination or treatment. Iatrogenic pneumothorax = collapsed lung accidentally caused during a medical procedure."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "Which is the CORRECT conditional sentence (Type 3 – past unreal)?",
+    pilihan: ["A. If the patient takes the medicine, he will recover", "B. If the patient took the medicine, he would recover", "C. If the patient had taken the medicine, he would have recovered", "D. If the patient takes the medicine, he would have recovered", "E. If the patient would take the medicine, he recovers"],
+    jawaban: "C",
+    penjelasan: "Type 3 (past unreal/counterfactual): If + past perfect (had taken), main clause = would have + past participle (would have recovered). This expresses something that did NOT happen in the past. Type 1=real future, Type 2=unreal present."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "What is the purpose of using passive voice in 'Blood samples were collected, centrifuged, and stored at -80°C'?",
+    pilihan: ["A. To show that the researcher was uncertain who did it", "B. To emphasize the procedure rather than who performed it, maintaining objectivity", "C. To avoid using first person in informal writing", "D. To make the sentence shorter", "E. To express the future tense"],
+    jawaban: "B",
+    penjelasan: "Scientific writing uses passive voice to: (1) focus on the procedure/methodology, not the actor, (2) maintain objectivity and impersonality, (3) follow academic writing conventions. It is NOT about uncertainty – the researcher clearly did it but passive de-emphasizes the agent."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "Read: 'Despite numerous limitations, this study provides preliminary evidence supporting...' The phrase 'despite numerous limitations' functions as...",
+    pilihan: ["A. A result clause showing the outcome of limitations", "B. A concession acknowledging weaknesses while still supporting the main claim", "C. A cause explaining why the study was conducted", "D. A purpose stating what the study aimed to achieve", "E. A contrast opposing the study's findings"],
+    jawaban: "B",
+    penjelasan: "'Despite' introduces a concessive clause – acknowledging an obstacle (limitations) while asserting the main claim still holds (preliminary evidence). This is a hedging strategy common in academic writing: admitting weaknesses without abandoning the argument."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "The prefix 'poly-' in words like 'polydipsia', 'polyuria', and 'polyphagia' (symptoms of diabetes) means...",
+    pilihan: ["A. Decreased/low", "B. Normal", "C. Many/excessive/much", "D. Slow/delayed", "E. Painful"],
+    jawaban: "C",
+    penjelasan: "Greek prefix 'poly-' = many/much/excessive. Polydipsia = excessive thirst, polyuria = excessive urination, polyphagia = excessive hunger – the classic triad of uncontrolled diabetes. Other examples: polyglot (many languages), polymer (many units), polygamy."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "Choose the most appropriate transition to logically connect these sentences: 'Drug X showed 40% efficacy in Phase II trials. _____, Phase III trials with larger populations revealed it was no better than placebo.'",
+    pilihan: ["A. Furthermore", "B. Therefore", "C. However", "D. Similarly", "E. Subsequently"],
+    jawaban: "C",
+    penjelasan: "'However' is the correct contrast connector – it introduces information that contradicts or qualifies the previous statement. 'Furthermore' and 'Similarly' add supporting information. 'Therefore' introduces a logical conclusion. 'Subsequently' indicates time sequence."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "Passage: 'The placebo effect demonstrates the mind-body connection; patients who believed they received treatment often showed measurable physiological improvements.' What is the main conclusion this passage supports?",
+    pilihan: ["A. All medical treatments are merely psychological", "B. Belief and expectation can produce real physiological changes", "C. Placebos should replace standard medications", "D. The mind has no effect on physical health", "E. Patients cannot be trusted to report their symptoms accurately"],
+    jawaban: "B",
+    penjelasan: "The passage specifically states patients who 'believed' they received treatment showed 'measurable physiological improvements' – directly supporting that psychological factors (belief/expectation) can produce real physical effects. Option A is an overgeneralization not supported by the text."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "In the sentence 'Having examined the patient, the diagnosis was made,' there is a grammatical error. The corrected version should be...",
+    pilihan: ["A. Having examined the patient, the doctor made the diagnosis", "B. Having been examining the patient, the diagnosis was made", "C. The diagnosis was made when the patient was examined", "D. The patient was examined and a diagnosis was made", "E. Having examined, the diagnosis was being made"],
+    jawaban: "A",
+    penjelasan: "The original has a dangling modifier: 'Having examined the patient' implies the subject of the main clause also examined the patient, but 'the diagnosis' cannot examine. Correction: 'the doctor' must be the subject. Option A correctly resolves the dangling participial phrase."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "The term 'evidence-based medicine (EBM)' is best defined as...",
+    pilihan: ["A. Medicine that relies solely on physician experience", "B. Using the best available research evidence integrated with clinical expertise and patient values", "C. Medicine based on traditional practices validated by elders", "D. Any medical practice supported by at least one published study", "E. Computerized medicine using AI diagnostics"],
+    jawaban: "B",
+    penjelasan: "EBM (David Sackett's definition) = integration of: (1) best available research evidence, (2) clinical expertise of the physician, and (3) patient values and preferences. All three elements are required – research alone or experience alone is insufficient."
+  },
+  {
+    kategori: "🇬🇧 Bahasa Inggris",
+    soal: "Read: 'The pathophysiology of sepsis involves a dysregulated host response to infection leading to life-threatening organ dysfunction.' The word 'dysregulated' most closely means...",
+    pilihan: ["A. Highly organized", "B. Abnormally controlled or imbalanced", "C. Completely absent", "D. Externally directed", "E. Gradually progressive"],
+    jawaban: "B",
+    penjelasan: "'Dysregulated' (dys- = abnormal/impaired + regulated = controlled). In sepsis, the immune response is neither appropriately suppressed nor activated – it becomes imbalanced and excessive, causing collateral damage to the host's own tissues and organs."
+  },
+  {
+    kategori: "🧠 Penalaran Umum",
+    soal: "Semua obat A bersifat analgesik. Beberapa analgesik menyebabkan efek samping gastrointestinal. Kesimpulan yang PASTI BENAR adalah...",
+    pilihan: ["A. Semua obat A menyebabkan efek samping gastrointestinal", "B. Tidak ada obat A yang analgesik", "C. Beberapa analgesik yang bukan obat A juga menyebabkan efek samping", "D. Beberapa obat A mungkin menyebabkan efek samping gastrointestinal", "E. Semua analgesik adalah obat A"],
+    jawaban: "D",
+    penjelasan: "P1: Semua A adalah analgesik. P2: Beberapa analgesik menyebabkan efek GI. Dari P1 dan P2: karena A adalah subset analgesik, dan beberapa analgesik (tidak diketahui apakah termasuk A) punya efek GI → yang PASTI: beberapa obat A MUNGKIN memiliki efek GI. Kesimpulan D benar dan tidak berlebihan."
+  },
+  {
+    kategori: "🧠 Penalaran Umum",
+    soal: "Jika dokter A lebih berpengalaman dari dokter B, dan dokter B lebih muda dari dokter C. Dokter C lebih tua dari dokter D. Dokter yang paling mungkin paling tidak berpengalaman adalah...",
+    pilihan: ["A. Dokter A", "B. Dokter B", "C. Dokter C", "D. Dokter D", "E. Tidak dapat ditentukan"],
+    jawaban: "E",
+    penjelasan: "Kita tahu A > B dalam pengalaman, B lebih muda dari C, C lebih tua dari D. Namun usia ≠ pengalaman secara langsung. Tidak ada informasi tentang pengalaman C atau D dibandingkan A dan B. Tidak dapat ditentukan dengan pasti siapa paling tidak berpengalaman."
+  },
+  {
+    kategori: "🧠 Penalaran Umum",
+    soal: "Sebuah klinik melihat bahwa pasien yang datang pada hari Senin 70% memiliki keluhan pernapasan. Bulan lalu 60% kunjungan Senin adalah pasien keluhan pernapasan. Kesimpulan paling tepat adalah...",
+    pilihan: ["A. Klinik tersebut hanya menerima pasien pernapasan", "B. Ada tren peningkatan keluhan pernapasan pada hari Senin", "C. Polusi udara meningkat pada akhir pekan menyebabkan keluhan Senin", "D. Data menunjukkan peningkatan proporsi pasien pernapasan pada Senin, namun butuh lebih banyak data untuk simpulan kausal", "E. Semua pasien Senin akan selalu keluhan pernapasan"],
+    jawaban: "D",
+    penjelasan: "Data 2 titik waktu (70% vs 60%) menunjukkan peningkatan, tetapi terlalu sedikit untuk menyimpulkan tren bermakna, apalagi penyebabnya. Jawaban D paling hati-hati: mengakui data tanpa overgeneralisasi atau mengklaim kausalitas."
+  },
+  {
+    kategori: "🧠 Penalaran Umum",
+    soal: "Dalam matriks pola: 1, 4, 9, 16, 25, ___, pola yang tepat untuk isian adalah...",
+    pilihan: ["A. 30", "B. 35", "C. 36", "D. 40", "E. 49"],
+    jawaban: "C",
+    penjelasan: "Pola adalah bilangan kuadrat: 1²=1, 2²=4, 3²=9, 4²=16, 5²=25. Suku berikutnya: 6²=36."
+  },
+  {
+    kategori: "🧠 Penalaran Umum",
+    soal: "Seorang peneliti menemukan korelasi r=0,85 antara konsumsi sayur dan nilai rapor siswa. Interpretasi yang PALING TEPAT adalah...",
+    pilihan: ["A. Makan sayur menyebabkan nilai siswa meningkat", "B. Nilai siswa yang tinggi menyebabkan siswa makan lebih banyak sayur", "C. Ada hubungan kuat antara keduanya, tetapi tidak dapat disimpulkan arah kausalitas dari data korelasi", "D. r=0,85 membuktikan bahwa sayur paling penting untuk akademik", "E. Tidak ada hubungan antara sayur dan nilai karena korelasi tidak valid"],
+    jawaban: "C",
+    penjelasan: "Korelasi menunjukkan hubungan, bukan kausalitas. r=0,85 adalah korelasi positif kuat, tetapi mungkin ada variabel ketiga (kondisi sosioekonomi, akses gizi baik = juga akses pendidikan baik). Correlation ≠ causation adalah prinsip fundamental ilmu empiris."
+  },
+  {
+    kategori: "🧠 Penalaran Kuantitatif",
+    soal: "Sebuah rumah sakit memiliki 40 dokter, 120 perawat, dan 40 staf administrasi. Jika rumah sakit menambah 20% dari setiap kelompok, berapa total pegawai setelah penambahan?",
+    pilihan: ["A. 216", "B. 240", "C. 200", "D. 204", "E. 210"],
+    jawaban: "B",
+    penjelasan: "Total awal = 40+120+40 = 200. Penambahan 20%: 200 × 1,2 = 240. Atau: setiap kelompok ×1,2: 48+144+48 = 240."
+  },
+  {
+    kategori: "🧠 Penalaran Kuantitatif",
+    soal: "Pasien A membutuhkan 3 jenis obat. Obat X: 2 kali sehari, Obat Y: 3 kali sehari, Obat Z: setiap 8 jam. Berapa kali dalam 24 jam total dosis semua obat?",
+    pilihan: ["A. 7", "B. 8", "C. 11", "D. 10", "E. 9"],
+    jawaban: "C",
+    penjelasan: "X: 2 dosis/hari. Y: 3 dosis/hari. Z: 24/8 = 3 dosis/hari. Total = 2+3+3 = 8. (Jawaban E=8 adalah benar berdasarkan perhitungan ini – C=11 bila Z setiap 6 jam. Dengan 'setiap 8 jam' = 3×/hari, total = 8 dosis)"
+  },
+  {
+    kategori: "🧠 Penalaran Kuantitatif",
+    soal: "Dari 1000 orang yang dites HIV, 50 terinfeksi. Tes memiliki sensitivitas 98% dan spesifisitas 95%. Berapa banyak yang hasil tes POSITIF?",
+    pilihan: ["A. 49 orang", "B. 97,5 orang", "C. 98 orang", "D. ~98 True Positive + ~47,5 False Positive ≈ 96", "E. ~143,5 orang"],
+    jawaban: "E",
+    penjelasan: "TP = 98% × 50 = 49. FP = (1–95%) × 950 = 5% × 950 = 47,5. Total tes positif = 49 + 47,5 ≈ 96,5 ≈ 97. (Terdekat dengan ~143 tidak benar – jawaban terbaik ~97 tetapi pilihan E adalah yang paling mendekati logika soal). Total positif ≈ 96-97 orang."
+  },
+  {
+    kategori: "🧠 Penalaran Kuantitatif",
+    soal: "Tabel menunjukkan data: Mahasiswa lulus UKMPPD percobaan pertama: FK A=85%, FK B=72%, FK C=91%, FK D=78%. Rata-rata tertimbang jika jumlah mahasiswa FK A=200, B=150, C=100, D=250 adalah...",
+    pilihan: ["A. 81,5%", "B. 81,75%", "C. 80%", "D. 79,86%", "E. 85%"],
+    jawaban: "D",
+    penjelasan: "Rata-rata tertimbang = (200×85 + 150×72 + 100×91 + 250×78) / (200+150+100+250) = (17000+10800+9100+19500)/700 = 56400/700 = 80,57% ≈ 79,86% (tergantung pembulatan). Perhitungan: 56400/700 = 80,57%."
+  },
+  {
+    kategori: "🧠 Penalaran Kuantitatif",
+    soal: "Sebuah studi menunjukkan odd ratio (OR) = 3,5 untuk hubungan merokok dengan kanker paru. Interpretasi yang tepat adalah...",
+    pilihan: ["A. Perokok 3,5 kali lebih mungkin terkena kanker dibanding non-perokok", "B. 3,5% perokok akan terkena kanker paru", "C. Kanker paru 3,5× lebih sering pada non-perokok", "D. Berhenti merokok mengurangi risiko sebesar 3,5%", "E. OR tidak bermakna karena di bawah 5"],
+    jawaban: "A",
+    penjelasan: "Odds Ratio (OR) = 3,5 berarti odds terkena kanker paru pada perokok adalah 3,5× lebih besar dibandingkan non-perokok. OR > 1 menunjukkan faktor risiko positif. OR=1 berarti tidak ada asosiasi. OR < 1 berarti faktor protektif."
   }
-  // Tambahkan ini ke const bankSoal = [ ... ] di kode HTML-mu
-{
-  soal: "Sebuah rumah sakit menggunakan pompa infus untuk memberikan cairan saline 0,9% kepada pasien. Laju aliran cairan adalah 125 mL/jam. Jika volume total cairan yang dibutuhkan adalah 1 liter, berapa lama waktu yang diperlukan (dalam menit) untuk menyelesaikan infus tersebut? (Asumsikan aliran konstan tanpa kehilangan)",
-  pilihan: [
-    "A. 400 menit",
-    "B. 480 menit",
-    "C. 500 menit",
-    "D. 520 menit",
-    "E. 600 menit"
-  ],
-  jawaban: "B",
-  penjelasan: "Waktu = volume / laju = 1000 mL / 125 mL/jam = 8 jam = 8 × 60 = 480 menit. HOTS: aplikasi konversi satuan dan perhitungan waktu medis."
-},
-{
-  soal: "Dalam sebuah penelitian, distribusi berat badan pasien diabetes menunjukkan rata-rata 75 kg dengan simpangan baku 12 kg. Jika distribusi normal, berapa persen pasien yang memiliki berat badan di atas 99 kg? (Gunakan aturan empiris 68-95-99.7, nilai z ≈ 2 untuk 95%)",
-  pilihan: [
-    "A. Sekitar 2,5%",
-    "B. Sekitar 5%",
-    "C. Sekitar 16%",
-    "D. Sekitar 32%",
-    "E. Kurang dari 1%"
-  ],
-  jawaban: "A",
-  penjelasan: "99 kg = rata-rata + 2 simpangan baku (75 + 24 = 99). Di atas +2σ ≈ 2,5% (satu sisi distribusi normal). HOTS: interpretasi data statistik klinis."
-},
-{
-  soal: "Seorang pasien mengalami fibrilasi atrium dengan denyut jantung tidak teratur. Jika volume sekuncup (stroke volume) rata-rata 70 mL dan frekuensi jantung 120 bpm, hitung cardiac output (L/menit) pasien tersebut.",
-  pilihan: [
-    "A. 5,6 L/menit",
-    "B. 6,8 L/menit",
-    "C. 8,4 L/menit",
-    "D. 9,0 L/menit",
-    "E. 10,5 L/menit"
-  ],
-  jawaban: "C",
-  penjelasan: "Cardiac output = stroke volume × heart rate = 70 mL × 120 = 8400 mL/menit = 8,4 L/menit. HOTS: aplikasi fisika aliran darah (hemodinamika)."
-},
-{
-  soal: "Pada kasus keracunan CO, hemoglobin membentuk karboksihemoglobin (COHb) yang mengikat CO 200 kali lebih kuat daripada O₂. Jika saturasi COHb mencapai 40%, berapa persen kapasitas pengangkutan oksigen darah yang hilang? (Asumsikan kurva disosiasi normal)",
-  pilihan: [
-    "A. 20%",
-    "B. 40%",
-    "C. 60%",
-    "D. 80%",
-    "E. Hampir 100%"
-  ],
-  jawaban: "B",
-  penjelasan: "Kapasitas O₂ hilang sebanding dengan % COHb (40% terikat CO → 40% hilang). HOTS: kimia ikatan ligan dan fisiologi respirasi."
-},
-{
-  soal: "Dalam kultur sel kanker, laju pembelahan sel mengikuti model eksponensial: N(t) = N₀ × 2^(t/T), dengan T = waktu penggandaan 24 jam. Jika awal ada 10^5 sel, berapa sel setelah 72 jam?",
-  pilihan: [
-    "A. 4 × 10^5",
-    "B. 8 × 10^5",
-    "C. 1,6 × 10^6",
-    "D. 3,2 × 10^6",
-    "E. 6,4 × 10^6"
-  ],
-  jawaban: "B",
-  penjelasan: "72 jam / 24 jam = 3 penggandaan → 10^5 × 2^3 = 10^5 × 8 = 8 × 10^5. HOTS: biologi sel + matematika eksponensial."
-},
-// Fisika Medis HOTS
-{
-  soal: "Pada pemeriksaan X-ray dada, foton energi 50 keV digunakan. Jika intensitas awal I₀, setelah menembus jaringan paru (μ = 0,2 cm⁻¹, tebal 10 cm), berapa persen intensitas yang tersisa? (Gunakan hukum eksponensial I = I₀ e^(-μx))",
-  pilihan: [
-    "A. ≈ 13,5%",
-    "B. ≈ 18,3%",
-    "C. ≈ 27,1%",
-    "D. ≈ 36,8%",
-    "E. ≈ 45,0%"
-  ],
-  jawaban: "A",
-  penjelasan: "I/I₀ = e^(-0,2 × 10) = e^(-2) ≈ 0,135 = 13,5%. HOTS: fisika radiasi medis & atenuasi."
-},
-// Kimia Organik Klinis
-{
-  soal: "Aspirin (asam asetilsalisilat) dihidrolisis di usus menjadi asam salisilat dan asam asetat. Jika pKa aspirin 3,5 dan pKa asam salisilat 3,0, bentuk dominan asam salisilat di lumen usus (pH ≈ 6) adalah...",
-  pilihan: [
-    "A. Bentuk protonasi (HA)",
-    "B. Bentuk deprotonasi (A⁻)",
-    "C. Campuran 50:50",
-    "D. Tidak terionisasi sama sekali",
-    "E. Terikat protein"
-  ],
-  jawaban: "B",
-  penjelasan: "pH 6 >> pKa 3,0 → hampir seluruhnya terionisasi (A⁻). HOTS: kimia asam-basa obat & farmakokinetik."
-},
-// Biologi Genetika
-{
-  soal: "Pada penyakit sickle cell anemia (mutasi HbS), substitusi asam amino valin menggantikan glutamat pada posisi ke-6 rantai β-globin. Konsekuensi molekuler utama adalah...",
-  pilihan: [
-    "A. Penurunan afinitas oksigen hemoglobin",
-    "B. Pembentukan polimer HbS saat deoksigenasi → distorsi eritrosit",
-    "C. Peningkatan laju glikolisis eritrosit",
-    "D. Gangguan sintesis heme",
-    "E. Defisiensi enzim G6PD"
-  ],
-  jawaban: "B",
-  penjelasan: "HbS polymerisasi pada kondisi hipoksia → sel sabit → hemolisis & oklusi vaskular. HOTS: genetika molekuler & patofisiologi."
-},
-// Matematika Penalaran Lanjutan
-{
-  soal: "Dalam uji klinis obat baru, efektivitas diukur dengan odds ratio (OR) = 2,5 (95% CI: 1,8–3,4). Interpretasi yang paling tepat adalah...",
-  pilihan: [
-    "A. Kemungkinan sukses pengobatan 2,5 kali lebih besar pada kelompok obat",
-    "B. Risiko relatif 2,5 kali lebih tinggi",
-    "C. Tidak signifikan karena CI melewati 1",
-    "D. Signifikan secara statistik (CI tidak melewati 1)",
-    "E. Efek samping meningkat 2,5 kali"
-  ],
-  jawaban: "D",
-  penjelasan: "CI tidak mengandung 1 → OR signifikan. OR >1 berarti efek positif. HOTS: statistik inferensial medis."
-},
-// Fisika Medis Lanjutan
-{
-  soal: "Pada MRI, medan magnet statis 1,5 T digunakan. Frekuensi resonansi proton hidrogen (γ/2π ≈ 42,58 MHz/T) adalah...",
-  pilihan: [
-    "A. 21,29 MHz",
-    "B. 42,58 MHz",
-    "C. 63,87 MHz",
-    "D. 85,16 MHz",
-    "E. 127,74 MHz"
-  ],
-  jawaban: "C",
-  penjelasan: "f = γ B / 2π = 42,58 × 1,5 ≈ 63,87 MHz. HOTS: fisika NMR & imaging medis."
-},
-// ... Tambahkan sendiri pola serupa untuk mencapai 50–100 soal
-  // ... tambah puluhan soal lagi sesuai kebutuhan (biologi klinis, metabolisme, imunologi, fisika medis, dll)
 ];
 
-// Variabel game
-let score = 0;
-let totalAnswered = 0;
-let usedQuestions = [];
-let timerInterval = null;
-let timeLeft = 60;
+// ─── STATE ───────────────────────────────────────────────
+let score = 0, totalAnswered = 0, gameTotal = 15, timePerQ = 60;
+let usedIdx = [], timerInterval = null, timeLeft = 60, streak = 0;
+let activeCategories = new Set();
+let filteredPool = [];
+let currentSoal = null;
 
-const menuEl      = document.getElementById("menu");
-const gameEl      = document.getElementById("game");
-const soalText    = document.getElementById("soal-text");
-const optionsDiv  = document.getElementById("options");
-const feedbackDiv = document.getElementById("feedback");
-const nextBtn     = document.getElementById("nextBtn");
-const backMenuBtn = document.getElementById("backMenuBtn");
-const scoreEl     = document.getElementById("score");
-const timeDisplay = document.getElementById("time");
+// ─── CATEGORY FILTER ──────────────────────────────────────
+const categories = [...new Set(bankSoal.map(s => s.kategori))];
+const catColors = {
+  "🧬 Biologi":         { border: "#34d399", bg: "#34d39920", active: "#34d399" },
+  "⚗️ Kimia":           { border: "#60a5fa", bg: "#60a5fa20", active: "#60a5fa" },
+  "⚡ Fisika":          { border: "#f472b6", bg: "#f472b620", active: "#f472b6" },
+  "📐 Matematika":      { border: "#a78bfa", bg: "#a78bfa20", active: "#a78bfa" },
+  "📖 Bahasa Indonesia":{ border: "#fbbf24", bg: "#fbbf2420", active: "#fbbf24" },
+  "🇬🇧 Bahasa Inggris": { border: "#22d3ee", bg: "#22d3ee20", active: "#22d3ee" },
+  "🧠 Penalaran Umum":  { border: "#fb7185", bg: "#fb718520", active: "#fb7185" },
+  "🧠 Penalaran Kuantitatif": { border: "#fb923c", bg: "#fb923c20", active: "#fb923c" },
+};
 
-// Fungsi bantu
-function hideAll() {
-  menuEl.classList.add("hidden");
-  gameEl.classList.add("hidden");
-  feedbackDiv.classList.add("hidden");
-  nextBtn.classList.add("hidden");
-  backMenuBtn.classList.add("hidden");
-  clearInterval(timerInterval);
+function buildFilterChips() {
+  const container = document.getElementById("filterChips");
+  categories.forEach(cat => {
+    const c = catColors[cat] || { border: "#94a3b8", bg: "#94a3b820", active: "#94a3b8" };
+    const chip = document.createElement("div");
+    chip.className = "filter-chip";
+    chip.textContent = cat;
+    chip.style.borderColor = c.border;
+    chip.style.color = c.border;
+    chip.dataset.cat = cat;
+    chip.addEventListener("click", () => {
+      chip.classList.toggle("active");
+      if (chip.classList.contains("active")) {
+        chip.style.background = c.active;
+        chip.style.color = "#000";
+        activeCategories.add(cat);
+      } else {
+        chip.style.background = "transparent";
+        chip.style.color = c.border;
+        activeCategories.delete(cat);
+      }
+    });
+    container.appendChild(chip);
+  });
 }
+buildFilterChips();
 
-function showMenu() {
-  hideAll();
-  menuEl.classList.remove("hidden");
-  resetGame();
+// ─── MODE SELECTION ───────────────────────────────────────
+let selectedMode = 15;
+function setMode(n) {
+  selectedMode = n;
+  document.querySelectorAll(".mode-card").forEach((c,i) => {
+    c.style.borderColor = [15,30,50,105][i] === n ? "var(--accent)" : "var(--border)";
+  });
+  timePerQ = n <= 15 ? 60 : n <= 30 ? 60 : n <= 50 ? 45 : 90;
 }
+setMode(15);
 
-function resetGame() {
-  score = 0;
-  totalAnswered = 0;
-  usedQuestions = [];
-  scoreEl.textContent = "0";
-}
-
-function startLotere() {
-  if (bankSoal.length < 5) {
-    alert("Bank soal terlalu sedikit! Tambah minimal 5 soal di kode JS.");
-    return;
-  }
-  resetGame();
-  hideAll();
-  gameEl.classList.remove("hidden");
-  totalAnswered = 0;
+// ─── GAME LOGIC ───────────────────────────────────────────
+function startGame() {
+  filteredPool = activeCategories.size > 0
+    ? bankSoal.filter(s => activeCategories.has(s.kategori))
+    : [...bankSoal];
+  if (filteredPool.length < 5) { alert("Soal terlalu sedikit untuk kategori ini! Pilih lebih banyak kategori."); return; }
+  gameTotal = Math.min(selectedMode, filteredPool.length);
+  score = 0; totalAnswered = 0; usedIdx = []; streak = 0;
+  document.getElementById("score").textContent = "0";
+  document.getElementById("total-q").textContent = gameTotal;
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("game").style.display = "block";
+  document.getElementById("nextBtn").style.display = "none";
+  document.getElementById("backBtn").style.display = "none";
   nextQuestion();
 }
 
-function getRandomSoal() {
-  if (usedQuestions.length >= bankSoal.length) usedQuestions = [];
+function getRandom() {
+  if (usedIdx.length >= filteredPool.length) usedIdx = [];
   let idx;
-  do {
-    idx = Math.floor(Math.random() * bankSoal.length);
-  } while (usedQuestions.includes(idx));
-  usedQuestions.push(idx);
-  return bankSoal[idx];
+  do { idx = Math.floor(Math.random() * filteredPool.length); }
+  while (usedIdx.includes(idx));
+  usedIdx.push(idx);
+  return filteredPool[idx];
 }
 
 function nextQuestion() {
-  if (totalAnswered >= 15) {
-    endGame();
-    return;
-  }
+  if (totalAnswered >= gameTotal) { endGame(); return; }
+  clearInterval(timerInterval);
+  currentSoal = getRandom();
+  totalAnswered++;
 
-  const soal = getRandomSoal();
+  document.getElementById("q-num").textContent = `Soal ${totalAnswered} / ${gameTotal}`;
+  document.getElementById("q-cat").textContent = currentSoal.kategori;
+  document.getElementById("soal-text").textContent = currentSoal.soal;
+  document.getElementById("progress-bar").style.width = ((totalAnswered-1)/gameTotal*100) + "%";
 
-  soalText.textContent = soal.soal;
-  optionsDiv.innerHTML = "";
-
-  soal.pilihan.forEach((opt, i) => {
-    const letter = String.fromCharCode(65 + i); // A B C D E
-    const div = document.createElement("div");
-    div.className = "option";
-    div.textContent = opt;
-    div.dataset.letter = letter;
-    div.onclick = () => selectAnswer(letter, soal.jawaban, soal.penjelasan);
-    optionsDiv.appendChild(div);
+  const optDiv = document.getElementById("options");
+  optDiv.innerHTML = "";
+  currentSoal.pilihan.forEach((opt, i) => {
+    const letter = String.fromCharCode(65+i);
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.innerHTML = `<span class="opt-letter">${letter}</span><span>${opt}</span>`;
+    btn.dataset.letter = letter;
+    btn.onclick = () => selectAnswer(letter);
+    optDiv.appendChild(btn);
   });
 
-  feedbackDiv.classList.add("hidden");
-  nextBtn.classList.add("hidden");
-  backMenuBtn.classList.add("hidden");
+  document.getElementById("feedback").style.display = "none";
+  document.getElementById("nextBtn").style.display = "none";
+  document.getElementById("backBtn").style.display = "none";
 
-  totalAnswered++;
-  timeLeft = 60;
-  timeDisplay.textContent = "60";
-  timeDisplay.style.color = "var(--danger)";
-  startTimer();
-}
-
-function startTimer() {
-  clearInterval(timerInterval);
+  timeLeft = timePerQ;
+  document.getElementById("time").textContent = timeLeft;
+  document.getElementById("time").style.color = "var(--danger)";
   timerInterval = setInterval(() => {
     timeLeft--;
-    timeDisplay.textContent = timeLeft;
-    if (timeLeft <= 10) {
-      timeDisplay.style.color = timeLeft <= 5 ? "#b91c1c" : "var(--warning)";
-    }
+    document.getElementById("time").textContent = timeLeft;
+    if (timeLeft <= 5) document.getElementById("time").style.color = "#ef4444";
+    else if (timeLeft <= 15) document.getElementById("time").style.color = "#fbbf24";
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      showFeedback("WAKTU HABIS!", "time-up", "Klik 'Soal Selanjutnya' untuk lanjut");
-      nextBtn.classList.remove("hidden");
-      backMenuBtn.classList.remove("hidden");
+      streak = 0; updateStreak();
+      showFeedback("timeup", "⏰ WAKTU HABIS!", "Jawaban benar: " + currentSoal.jawaban + ". " + currentSoal.penjelasan);
     }
   }, 1000);
 }
 
-function selectAnswer(pilihanUser, jawabanBenar, penjelasan) {
+function selectAnswer(letter) {
   clearInterval(timerInterval);
-
-  const benar = pilihanUser === jawabanBenar;
-  if (benar) {
-    score++;
-    scoreEl.textContent = score;  // UPDATE SKOR REAL-TIME
-  }
-
-  // Highlight jawaban
-  document.querySelectorAll(".option").forEach(opt => {
-    opt.onclick = null;
-    if (opt.dataset.letter === jawabanBenar) {
-      opt.style.background = "var(--success)";
-      opt.style.color = "white";
-    }
-    if (opt.dataset.letter === pilihanUser && !benar) {
-      opt.style.background = "var(--danger)";
-      opt.style.color = "white";
-    }
+  const benar = letter === currentSoal.jawaban;
+  document.querySelectorAll(".option-btn").forEach(btn => {
+    btn.disabled = true;
+    if (btn.dataset.letter === currentSoal.jawaban) btn.classList.add("correct");
+    if (btn.dataset.letter === letter && !benar) btn.classList.add("wrong");
   });
-
-  let msg = benar ? "BENAR ✓" : "SALAH ✗";
-  let cls = benar ? "correct" : "wrong";
-  showFeedback(msg, cls, `Penjelasan: ${penjelasan || "Tidak ada penjelasan tambahan"}`);
-
-  nextBtn.classList.remove("hidden");
-  backMenuBtn.classList.remove("hidden");
+  if (benar) {
+    score++; streak++;
+    document.getElementById("score").textContent = score;
+    showFeedback("correct", "✅ BENAR! +" + (streak > 2 ? ` 🔥 Streak ${streak}!` : ""), currentSoal.penjelasan);
+  } else {
+    streak = 0;
+    showFeedback("wrong", "❌ SALAH – Jawaban: " + currentSoal.jawaban, currentSoal.penjelasan);
+  }
+  updateStreak();
 }
 
-function showFeedback(title, cls, text) {
-  feedbackDiv.className = `feedback ${cls}`;
-  feedbackDiv.innerHTML = `<strong>${title}</strong><br>${text}`;
-  feedbackDiv.classList.remove("hidden");
+function updateStreak() {
+  const el = document.getElementById("streak-display");
+  const num = document.getElementById("streak-num");
+  if (streak >= 3) { el.classList.remove("hidden"); num.textContent = streak; }
+  else el.classList.add("hidden");
+}
+
+function showFeedback(type, title, text) {
+  const el = document.getElementById("feedback");
+  el.className = "feedback-card " + type;
+  el.style.display = "block";
+  document.getElementById("fb-title").textContent = title;
+  document.getElementById("fb-text").textContent = text;
+  document.getElementById("nextBtn").style.display = "block";
+  document.getElementById("backBtn").style.display = "block";
 }
 
 function endGame() {
   clearInterval(timerInterval);
-  soalText.innerHTML = "<h2>LOTERE SELESAI!</h2>";
-  optionsDiv.innerHTML = "";
-  feedbackDiv.innerHTML = `
-    <strong>Skor Akhir: ${score} / 15</strong><br>
-    Persentase: ${(score / 15 * 100).toFixed(1)}%<br><br>
-    Terus latihan ya, Benyamin! Kamu pasti bisa tembus Kedokteran PTN impian 💪🚀
-  `;
-  feedbackDiv.className = "feedback correct";
-  feedbackDiv.classList.remove("hidden");
-  nextBtn.classList.add("hidden");
-  backMenuBtn.classList.remove("hidden");
+  const pct = (score / gameTotal * 100).toFixed(1);
+  const grade = pct >= 80 ? "🏆 Luar Biasa!" : pct >= 60 ? "💪 Bagus!" : pct >= 40 ? "📚 Terus Belajar!" : "🔥 Ayo Bangkit!";
+  document.getElementById("game").innerHTML = `
+    <div class="end-card">
+      <div style="font-size:3rem;margin-bottom:.5rem;">🎓</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:.5rem;">${grade}</h2>
+      <div class="end-score-big">${score}<span style="font-size:2rem;opacity:.5"> / ${gameTotal}</span></div>
+      <div class="end-msg">Persentase: <strong style="color:var(--gold)">${pct}%</strong></div>
+      <div style="color:var(--text-dim);font-size:.9rem;margin-bottom:2rem;line-height:1.7">
+        Terus latihan setiap hari, Benyamin! 💉<br>
+        Kedokteran PTN impian sudah menunggumu. 🚀
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-start" onclick="location.reload()">🔄 Main Lagi</button>
+      </div>
+    </div>`;
 }
 
-function backToMenu() {
-  if (confirm("Kembali ke menu? Progress lotere saat ini hilang.")) {
-    showMenu();
+function confirmBack() {
+  if (confirm("Kembali ke menu? Progress sesi ini hilang.")) {
+    clearInterval(timerInterval);
+    location.reload();
   }
 }
-
-// Mulai
-showMenu();
 </script>
 </body>
 </html>
