@@ -10,6 +10,7 @@
       --primary-dark: #1e3a8a;
       --success: #22c55e;
       --danger: #ef4444;
+      --warning: #f59e0b;
       --light: #f3f4f6;
       --dark: #111827;
     }
@@ -20,81 +21,81 @@
       color: var(--dark);
       min-height: 100vh;
       padding: 20px;
+      line-height: 1.5;
     }
     .container {
       max-width: 900px;
       margin: 0 auto;
       background: white;
       border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
       overflow: hidden;
     }
     header {
       background: var(--primary);
       color: white;
-      padding: 1.5rem;
+      padding: 2rem 1.5rem;
       text-align: center;
     }
-    h1 { margin-bottom: 0.5rem; }
-    .menu, .game-area {
-      padding: 2rem;
-      text-align: center;
-    }
+    h1 { margin-bottom: 0.5rem; font-size: 2.2rem; }
+    .menu, .game-area { padding: 2.5rem 2rem; text-align: center; }
     button {
       background: var(--primary);
       color: white;
       border: none;
-      padding: 1rem 2.5rem;
-      margin: 1rem 0.8rem;
+      padding: 1.1rem 2.8rem;
+      margin: 1rem 1rem;
       border-radius: 12px;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
+      font-weight: bold;
       cursor: pointer;
-      transition: all 0.25s;
+      transition: all 0.3s;
     }
-    button:hover { background: var(--primary-dark); transform: scale(1.05); }
+    button:hover { background: var(--primary-dark); transform: translateY(-3px); }
+    #score-board {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 1.5rem 0;
+      color: var(--primary);
+    }
+    #timer {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--danger);
+      margin: 1rem 0;
+    }
+    #soal-text {
+      font-size: 1.35rem;
+      line-height: 1.8;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
     .options {
       display: grid;
-      gap: 14px;
+      gap: 1rem;
       margin: 2rem 0;
     }
     .option {
       background: var(--light);
-      padding: 1.4rem;
+      padding: 1.3rem;
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.25s;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       border: 2px solid transparent;
       text-align: left;
     }
     .option:hover { background: #dbeafe; border-color: var(--primary); }
-    .option.selected { background: var(--primary); color: white; border-color: var(--primary-dark); }
-    #timer {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: var(--danger);
-      margin: 1.2rem 0;
-    }
     #feedback {
       padding: 1.8rem;
       border-radius: 12px;
-      margin: 1.8rem 0;
-      font-size: 1.15rem;
+      margin: 2rem 0;
+      font-size: 1.2rem;
       line-height: 1.6;
     }
     .correct   { background: #ecfccb; color: #166534; }
     .wrong     { background: #fee2e2; color: #991b1b; }
     .time-up   { background: #fef3c7; color: #92400e; }
-    #score-board {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin: 1.5rem 0;
-    }
-    #soal-text {
-      font-size: 1.3rem;
-      line-height: 1.8;
-      margin-bottom: 1.8rem;
-    }
     .hidden { display: none; }
     footer {
       text-align: center;
@@ -109,121 +110,115 @@
 <div class="container">
   <header>
     <h1>Bentok Lottere</h1>
-    <p>HOTS Saintek Persiapan Kedokteran PTN (SNBT 2023-2025 Style)</p>
+    <p>HOTS Saintek Kedokteran PTN – Mode Lotere Intens</p>
   </header>
 
   <div id="menu" class="menu">
-    <button onclick="startLotere()">MULAI LOTERE (15 Soal - Timer 60 detik)</button>
-    <button onclick="if(confirm('Yakin keluar? Latihanmu akan hilang.')) window.close();">Keluar</button>
+    <button onclick="startLotere()">MULAI LOTERE (15 Soal – 60 Detik/Soal)</button>
+    <button onclick="if(confirm('Yakin keluar? Progress hilang.')) window.close();">Keluar</button>
   </div>
 
   <div id="game" class="game-area hidden">
-    <div id="score-board">Skor: <span id="score">0</span> / <span id="total">0</span></div>
-    <div id="timer" class="hidden">Sisa waktu: <span id="time">60</span> detik</div>
+    <div id="score-board">Skor: <span id="score">0</span> / 15</div>
+    <div id="timer">Sisa waktu: <span id="time">60</span> detik</div>
     
     <div id="soal-text"></div>
     <div id="options" class="options"></div>
     
     <div id="feedback" class="hidden"></div>
     
-    <div style="text-align:center; margin-top:2rem;">
+    <div style="margin-top: 2rem;">
       <button id="nextBtn" onclick="nextQuestion()" class="hidden">Soal Selanjutnya →</button>
       <button id="backMenuBtn" onclick="backToMenu()" class="hidden">Kembali ke Menu</button>
     </div>
   </div>
 
   <footer>
-    Edit bankSoal di kode JS untuk tambah soal HOTS • Semangat lolos Kedokteran PTN!
+    Tambah soal HOTS di array bankSoal (kode JS) • Semangat masuk Kedokteran PTN, Benyamin! 💉
   </footer>
 </div>
 
 <script>
-// ──────────────────────────────────────────────
-// BANK SOAL HOTS – TAMBAH DI SINI (target 100+ soal)
-// Format: {soal: "...", pilihan: ["A. ...", ...], jawaban: "C", penjelasan: "..."}
-// ──────────────────────────────────────────────
+// BANK SOAL – TAMBAH SOAL BARU DI SINI (target 50–100+ soal HOTS)
 const bankSoal = [
-  // Contoh HOTS Biologi Klinis & Metabolisme (inspirasi SNBT 2023-2025)
   {
-    soal: "Seorang pasien dengan riwayat transfusi sebelumnya mengalami demam, menggigil, dan hemoglobinuria 10 menit setelah transfusi darah O Rh+. Mekanisme paling mungkin adalah hemolisis akibat...",
+    soal: "Seorang pasien Rh- pernah hamil anak Rh+. Setelah transfusi darah Rh+ darurat, muncul hemolisis akut. Mekanisme imunologi utama adalah...",
     pilihan: [
-      "A. Antibodi IgE terhadap protein plasma donor",
-      "B. Aktivasi komplemen oleh IgM anti-A/B",
-      "C. IgG anti-Rh yang tersensitisasi sebelumnya",
-      "D. Reaksi graft-versus-host dari limfosit donor",
-      "E. Transfusion-associated circulatory overload"
+      "A. IgM anti-A/B menyerang eritrosit donor",
+      "B. IgG anti-Rh menginduksi hemolisis ekstravaskular",
+      "C. Reaksi anafilaksis tipe I",
+      "D. Kompleks imun tipe III di ginjal",
+      "E. Sitotoksisitas sel T tipe IV"
     ],
-    jawaban: "C",
-    penjelasan: "Riwayat sensitasi Rh- → IgG anti-Rh → hemolisis ekstravaskular (dominan pada reaksi Rh), hemoglobinuria jika berat."
+    jawaban: "B",
+    penjelasan: "Sensitasi Rh dari kehamilan sebelumnya → IgG anti-Rh → fagositosis ekstravaskular oleh makrofag limpa (hemolisis delayed/akut)."
   },
   {
-    soal: "Pada ketoasidosis diabetik, peningkatan anion gap disebabkan akumulasi anion organik. Anion utama yang terdeteksi dalam urin dan darah adalah...",
+    soal: "Pada ketoasidosis diabetik, anion gap meningkat karena akumulasi anion organik. Anion dominan yang menyebabkan ini adalah...",
     pilihan: [
-      "A. Asam laktat",
+      "A. Laktat",
       "B. β-hidroksibutirat",
-      "C. Asam sitrat",
-      "D. Asam oksalat",
-      "E. Klorida"
+      "C. Asam piruvat",
+      "D. Klorida",
+      "E. Bikarbonat"
     ],
     jawaban: "B",
-    penjelasan: "Badan keton (β-hidroksibutirat > asetoasetat) → asidosis metabolik high anion gap pada DKA."
+    penjelasan: "Produksi badan keton (β-hidroksibutirat utama) → asidosis metabolik high anion gap pada DKA."
   },
   {
-    soal: "Mutasi ΔF508 pada gen CFTR menyebabkan protein tidak dapat mencapai membran sel karena...",
+    soal: "Mutasi ΔF508 pada cystic fibrosis menyebabkan protein CFTR tidak mencapai membran karena...",
     pilihan: [
-      "A. Gangguan splicing RNA",
-      "B. Misfolding protein → degradasi ERAD",
-      "C. Penghentian translasi prematur",
-      "D. Kerusakan domain transmembran",
-      "E. Overekspresi chaperone"
+      "A. Gangguan translasi",
+      "B. Misfolding → degradasi ER-associated (ERAD)",
+      "C. Overekspresi chaperone",
+      "D. Mutasi pada domain nuklear",
+      "E. Gangguan splicing mRNA"
     ],
     jawaban: "B",
-    penjelasan: "ΔF508 → misfolding → ER-associated degradation → cystic fibrosis klasik."
+    penjelasan: "ΔF508 → protein salah lipat → diidentifikasi sebagai rusak → didegradasi proteasome di retikulum endoplasma."
   },
   {
-    soal: "Dalam glukoneogenesis hati saat puasa panjang, enzim kunci yang diaktivasi glukagon dan diinhibisi insulin adalah...",
+    soal: "Enzim kunci glukoneogenesis yang sangat diaktivasi glukagon (melalui penurunan fruktosa-2,6-bisfosfat) adalah...",
     pilihan: [
       "A. Glukokinase",
       "B. Fosfofruktokinase-1",
       "C. Fruktosa-1,6-bisfosfatase",
       "D. Piruvat kinase",
-      "E. Glikogen sintase"
+      "E. Glikogen fosforilase"
     ],
     jawaban: "C",
-    penjelasan: "Fruktosa-1,6-bisfosfatase ↑ oleh glukagon (↓ F2,6BP) → jalur glukoneogenesis dominan."
+    penjelasan: "Fruktosa-1,6-bisfosfatase diaktivasi saat F2,6BP rendah (glukagon tinggi) → memungkinkan glukoneogenesis berjalan."
   },
-  // Contoh HOTS Kimia & Biokimia Klinis
   {
-    soal: "Keracunan metanol menyebabkan kebutaan karena metabolitnya menghambat sitokrom oksidase. Metabolit toksik utama tersebut adalah...",
+    soal: "Keracunan metanol menyebabkan kebutaan karena metabolitnya menghambat enzim mitokondria. Metabolit toksik utama adalah...",
     pilihan: [
       "A. Formaldehida",
       "B. Asam format",
       "C. Metil glikolat",
       "D. Asam asetat",
-      "E. Metanol itu sendiri"
+      "E. Metanol langsung"
     ],
     jawaban: "B",
-    penjelasan: "Metanol → formaldehida → asam format (via folate-dependent) → inhibisi kompleks IV mitokondria → asidosis & toksisitas optik."
+    penjelasan: "Metanol → formaldehida → asam format → inhibisi sitokrom oksidase → asidosis metabolik & toksisitas saraf optik."
   },
-  // Contoh HOTS Fisika Medis
+  // Tambahkan soal HOTS baru di sini (contoh pola di atas)
+  // Contoh tambahan:
   {
-    soal: "Pada USG Doppler arteri karotis, frekuensi transducer 5 MHz, kecepatan darah 80 cm/s, sudut insonasi 60°, kecepatan bunyi jaringan 1540 m/s. Pergeseran frekuensi Doppler (Δf) adalah...",
+    soal: "Pasien defisiensi G6PD mengonsumsi primaquine. Mekanisme hemolisis akut adalah...",
     pilihan: [
-      "A. 2,07 kHz",
-      "B. 4,14 kHz",
-      "C. 5,18 kHz",
-      "D. 6,21 kHz",
-      "E. 8,28 kHz"
+      "A. Penurunan ATP → lisis membran",
+      "B. Kurang NADPH → kurang GSH → stres oksidatif eritrosit",
+      "C. Inhibisi langsung glikolisis",
+      "D. Pembentukan methemoglobin dominan",
+      "E. Reaksi autoimun"
     ],
     jawaban: "B",
-    penjelasan: "Δf = (2 × v × f × cosθ) / c = (2 × 0.8 × 5 × 0.5) / 1.54 ≈ 4,14 kHz (pulsa-echo)."
-  },
-  // Tambah soalmu di sini (copy pola di atas)
-  // Misal soal ke-8 sampai 100: variasi kasus klinis, grafik interpretasi, analisis data biokimia/fisiologi
+    penjelasan: "Defisiensi G6PD → jalur pentosa fosfat terganggu → ↓ NADPH → ↓ reduced glutathione → kerusakan oksidatif → hemolisis."
+  }
+  // ... tambah puluhan soal lagi sesuai kebutuhan (biologi klinis, metabolisme, imunologi, fisika medis, dll)
 ];
 
-// ──────────────────────────────────────────────
-// Variabel & Fungsi Game (hanya Mode Lotere)
+// Variabel game
 let score = 0;
 let totalAnswered = 0;
 let usedQuestions = [];
@@ -238,17 +233,15 @@ const feedbackDiv = document.getElementById("feedback");
 const nextBtn     = document.getElementById("nextBtn");
 const backMenuBtn = document.getElementById("backMenuBtn");
 const scoreEl     = document.getElementById("score");
-const totalEl     = document.getElementById("total");
-const timerEl     = document.getElementById("timer");
 const timeDisplay = document.getElementById("time");
 
+// Fungsi bantu
 function hideAll() {
   menuEl.classList.add("hidden");
   gameEl.classList.add("hidden");
   feedbackDiv.classList.add("hidden");
   nextBtn.classList.add("hidden");
   backMenuBtn.classList.add("hidden");
-  timerEl.classList.add("hidden");
   clearInterval(timerInterval);
 }
 
@@ -259,9 +252,10 @@ function showMenu() {
 }
 
 function resetGame() {
-  score = 0; totalAnswered = 0; usedQuestions = [];
+  score = 0;
+  totalAnswered = 0;
+  usedQuestions = [];
   scoreEl.textContent = "0";
-  totalEl.textContent = "0";
 }
 
 function startLotere() {
@@ -272,16 +266,16 @@ function startLotere() {
   resetGame();
   hideAll();
   gameEl.classList.remove("hidden");
-  timerEl.classList.remove("hidden");
-  totalEl.textContent = "15";
+  totalAnswered = 0;
   nextQuestion();
 }
 
 function getRandomSoal() {
   if (usedQuestions.length >= bankSoal.length) usedQuestions = [];
   let idx;
-  do { idx = Math.floor(Math.random() * bankSoal.length); } 
-  while (usedQuestions.includes(idx));
+  do {
+    idx = Math.floor(Math.random() * bankSoal.length);
+  } while (usedQuestions.includes(idx));
   usedQuestions.push(idx);
   return bankSoal[idx];
 }
@@ -298,7 +292,7 @@ function nextQuestion() {
   optionsDiv.innerHTML = "";
 
   soal.pilihan.forEach((opt, i) => {
-    const letter = String.fromCharCode(65 + i);
+    const letter = String.fromCharCode(65 + i); // A B C D E
     const div = document.createElement("div");
     div.className = "option";
     div.textContent = opt;
@@ -310,11 +304,11 @@ function nextQuestion() {
   feedbackDiv.classList.add("hidden");
   nextBtn.classList.add("hidden");
   backMenuBtn.classList.add("hidden");
-  totalAnswered++;
-  scoreEl.textContent = score;
 
+  totalAnswered++;
   timeLeft = 60;
   timeDisplay.textContent = "60";
+  timeDisplay.style.color = "var(--danger)";
   startTimer();
 }
 
@@ -323,10 +317,12 @@ function startTimer() {
   timerInterval = setInterval(() => {
     timeLeft--;
     timeDisplay.textContent = timeLeft;
-    if (timeLeft <= 10) timeDisplay.style.color = timeLeft <= 5 ? "#dc2626" : "#d97706";
+    if (timeLeft <= 10) {
+      timeDisplay.style.color = timeLeft <= 5 ? "#b91c1c" : "var(--warning)";
+    }
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      showFeedback("WAKTU HABIS!", "time-up", "Jawaban benar akan ditampilkan setelah klik 'Soal Selanjutnya'");
+      showFeedback("WAKTU HABIS!", "time-up", "Klik 'Soal Selanjutnya' untuk lanjut");
       nextBtn.classList.remove("hidden");
       backMenuBtn.classList.remove("hidden");
     }
@@ -337,9 +333,12 @@ function selectAnswer(pilihanUser, jawabanBenar, penjelasan) {
   clearInterval(timerInterval);
 
   const benar = pilihanUser === jawabanBenar;
-  if (benar) score++;
-  scoreEl.textContent = score;
+  if (benar) {
+    score++;
+    scoreEl.textContent = score;  // UPDATE SKOR REAL-TIME
+  }
 
+  // Highlight jawaban
   document.querySelectorAll(".option").forEach(opt => {
     opt.onclick = null;
     if (opt.dataset.letter === jawabanBenar) {
@@ -372,8 +371,8 @@ function endGame() {
   optionsDiv.innerHTML = "";
   feedbackDiv.innerHTML = `
     <strong>Skor Akhir: ${score} / 15</strong><br>
-    Persentase: ${(score / 15 * 100).toFixed(1)}% <br>
-    Terus latihan ya, Benyamin! 💪
+    Persentase: ${(score / 15 * 100).toFixed(1)}%<br><br>
+    Terus latihan ya, Benyamin! Kamu pasti bisa tembus Kedokteran PTN impian 💪🚀
   `;
   feedbackDiv.className = "feedback correct";
   feedbackDiv.classList.remove("hidden");
@@ -382,10 +381,12 @@ function endGame() {
 }
 
 function backToMenu() {
-  if (confirm("Kembali ke menu? Progress lotere hilang.")) showMenu();
+  if (confirm("Kembali ke menu? Progress lotere saat ini hilang.")) {
+    showMenu();
+  }
 }
 
-// Init
+// Mulai
 showMenu();
 </script>
 </body>
